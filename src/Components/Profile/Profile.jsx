@@ -21,7 +21,7 @@ const Profile = () => {
   const [state, setState] = useState("")
   const [country, setCountry] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
-
+  const [files,setfiles]=useState([]);
 
   const shippingNameChangeHalder = (e) =>{
     setShippingName(e.target.value)
@@ -44,10 +44,15 @@ const Profile = () => {
   }
 
   const shippingAddressClickHandler = () => {
-    console.log("onclick")
     dispatch(userShippingAdressAction({shippingName, city, pincode, state, country, phoneNumber}))
   }
-  
+
+  const fileHandleChange=(event)=>{
+    const newFiles=Array.from(event.target.files);
+    setfiles(newFiles);
+    console.log(files);
+  }
+
 
   return (
     <div className="profile-page-background">
@@ -56,9 +61,9 @@ const Profile = () => {
           <div className="div-profile-left-avatat">
             <img className="left-profile-img-avatar" src={user?.avatar} alt="avavatar" />
           </div>
-          <div className="button-upload-profile-div">
-          <button className="button-upload-profile">Upload</button>
-          </div>
+          <form className="button-upload-profile-div">
+          <input  name="images" onChange={fileHandleChange}  type="file"  multiple />
+          </form>
           <div className="input-fields-profile-div-left">
             <div className="input-div-profile-page">
               <label className="left-profile-name-label">Name</label>

@@ -1,11 +1,44 @@
 import React, { useState } from 'react'
 import "./dietplan.css"
-import data from "./data.js"
+import data from "./data.js";
+import { useDispatch } from 'react-redux';
+import { PlanAction } from '../../redux/slices/dietPlanSlice';
+
 
 
 const DietPlan = () => {
     const [selectedButtons, setSelectedButtons] = useState([]);
+    const [age, setage] = useState();
+    const [height, setHeight] = useState();
+    const [weight, setWeight] = useState();
+    const [gender, setgender] = useState();
+    const dispatch=useDispatch();
+    
+    const ageChangeHandler=(e)=>{
+        setage(e.target.value);
 
+    }
+
+    const heightChangeHandler=(e)=>{
+        setHeight(e.target.value);
+    }
+
+    const weightChangeHandler=(e)=>{
+        setWeight(e.target.value);
+    }
+
+    const genderChangeHandler=(e)=>{
+        setgender(e.target.value);
+    }
+
+    const onDietPlanSubmit=()=>{
+        const message = `Make a Diet Plan for a ${gender} aged ${age} years old. Having weight ${weight}Kgs and height ${height}cms. Want to stay fit and strong with these food items ${selectedButtons} having  a balanced nutritious diet and a 
+                         qoute for motivation too`
+        console.log(message);
+
+        dispatch(PlanAction({message}));
+
+    }
     const handleButtonClick = (buttonId) => {
         if (selectedButtons.includes(buttonId)) {
             setSelectedButtons(selectedButtons.filter((id) => id !== buttonId));
@@ -29,20 +62,19 @@ const DietPlan = () => {
                         <div className='form-dietplan'>
                             <div className='Dietplan-left'>
                                 <div className='input-fields-dietplan'>
-                                    <select id="Gender" name="Gender" className='input-fields-dietplan-item'>
-                                        <option value="Gender">Gender</option>
+                                    <select id="Gender" onChange={genderChangeHandler} name="Gender" className='input-fields-dietplan-item'>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
                                 </div>
                                 <div className='input-fields-dietplan'>
-                                    <input type="number" placeholder='Age' className='input-fields-dietplan-item' />
+                                    <input type="number" onChange={ageChangeHandler} placeholder='Age' className='input-fields-dietplan-item' />
                                 </div>
                                 <div className='input-fields-dietplan'>
-                                    <input type="number" className='input-fields-dietplan-item' placeholder='Height' />
+                                    <input type="number" onChange={heightChangeHandler} className='input-fields-dietplan-item' placeholder='Height' />
                                 </div>
                                 <div className='input-fields-dietplan'>
-                                    <input type="number" placeholder='Weight' className='input-fields-dietplan-item' />
+                                    <input type="number" onChange={weightChangeHandler} placeholder='Weight' className='input-fields-dietplan-item' />
                                 </div>
 
                             </div>
@@ -64,7 +96,7 @@ const DietPlan = () => {
                             </div>
                         </div>
                         <div className='form-button-div'>
-                            <button className='form-button'>Submit</button>
+                            <button onClick={onDietPlanSubmit} className='form-button'>Submit</button>
                         </div>
                 </div>
             {/* </div> */}

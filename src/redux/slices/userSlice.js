@@ -1,7 +1,6 @@
 import axios from "axios";
 import baseURL from "../../utils/baseURL";
 import { createAsyncThunk, createSlice, isAsyncThunkAction } from "@reduxjs/toolkit";
-import { get } from "mongoose";
 
 const initialState = {
     // ye wali loading or error jab use hoge jab user register krega 
