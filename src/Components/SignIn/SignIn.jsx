@@ -1,8 +1,44 @@
 import React from 'react'
 import './SignIn.css'
-import { Link,BrowserRouter } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { signInAction } from '../../redux/slices/userSlice'
 
 const SignIn = () => {
+  
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
+
+
+  const [email, setEmail] = useState("buddhgautam777@gmail.com")
+  const [password, setPassword] = useState("gautam")
+
+  const emailChangeHandler = (e) => {
+    setEmail(e.target.value)
+  }
+
+  const passwordChangeHandler = (e) => {
+    setPassword(e.target.value)
+  }
+
+  // const userInfo = useSelector((state) => state.users?.userAuth?.userInfo)
+  
+
+  const onSubmitHanlder = async(e) => {
+    // e.preventDefault();
+    console.log( email, password);
+   await dispatch(signInAction({ email, password}))
+
+  const userInfo = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;
+
+
+   
+    if(userInfo){
+      // <Link to='/otp' element={<Otp />} />
+      navigate(`/`)
+    }
+  }
   return (
     <div className='sign-in-page'>
         <img className='sign-in-page-img' src="https://res.cloudinary.com/dycitvrpg/image/upload/v1681382796/logo_xx6npu.png" alt="" />
@@ -22,16 +58,16 @@ const SignIn = () => {
                       
 
                         <p className='sign-up-page-input-fields-desc'>Email</p>
-                        <input className='sign-up-page-input-fields' type="text" />
+                        <input onChange={emailChangeHandler} className='sign-up-page-input-fields' type="text" />
                   
 
                     
                         <p className='sign-up-page-input-fields-desc'>Password</p>
-                        <input className='sign-up-page-input-fields' type="text" />
+                        <input onChange={passwordChangeHandler} className='sign-up-page-input-fields' type="text" />
                    
 
                    <div className='sign-up-page-submit-btn-div'>
-                   <button className='sign-up-button'>Submit</button>
+                   <button onClick={onSubmitHanlder} className='sign-up-button'>Submit</button>
                    </div>
                 </div>
 

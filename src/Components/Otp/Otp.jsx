@@ -1,7 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import "./otp.css";
-import {Link} from "react-router-dom"
+import { Link,useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { verifyUserOTPAction } from '../../redux/slices/userSlice'
+
+
+
 const Otp = () => {
+
+  
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
+
+  const [otp, setOtp] = useState('');
+
+  const otpChangeHandler = (e) => {
+    setOtp(e.target.value);
+  }
+
+  
+  const onSubmitHanlder = async(e) => {
+    await dispatch(verifyUserOTPAction({otp}));  
+    const userInfo = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;
+  
+    if(userInfo){
+      navigate(`/`)
+    }  
+  }
+
+ 
+
   return (
     <div className="otp-main-div">
       <div className="otp-head-div">
@@ -23,11 +51,11 @@ const Otp = () => {
 
                     
                         <p className='sign-up-page-input-fields-desc'>One Time Password</p>
-                        <input className='sign-up-page-input-fields' type="Number" />
+                        <input onChange={otpChangeHandler} className='sign-up-page-input-fields' type="Number" />
                    
 
                    <div className='sign-up-page-submit-btn-div'>
-                   <button className='sign-up-button'>Submit</button>
+                   <button onClick={onSubmitHanlder} className='sign-up-button'>Submit</button>
                    </div>
                 </div>
 
