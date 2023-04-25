@@ -61,7 +61,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/otp" element={<Otp />} />
         <Route path='/forget/password' element ={<ForgetPassword />} />
-        <Route path='/reset/password' element ={<ResetPassword />} />
+        <Route path='/reset/password/:id' element ={<ResetPassword />} />
 
         <Route path="/dietplan" element={
           <>

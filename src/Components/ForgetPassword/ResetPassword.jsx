@@ -1,7 +1,19 @@
 import React from "react";
-import { Link } from 'react-router-dom'
+import { useState} from "react";
+import { Link, useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { resetPasswordAction } from '../../redux/slices/userSlice';
 
 const ResetPassword = () => {
+  const [resetPassword,setResetPassword]=useState();
+  const dispatch=useDispatch();
+  const params=useParams();
+  const onChangePassword=(e)=>{
+  setResetPassword(e.target.value);
+}
+const OnSubmitPassword=()=>{
+  dispatch(resetPasswordAction({resetPassword,id:params.id}))
+}
   return (
     <div className="otp-main-div">
       <div className="otp-head-div">
@@ -23,10 +35,10 @@ const ResetPassword = () => {
 
           <div className="sign-up-right-input-parent-div">
             <p className="sign-up-page-input-fields-desc">New Password</p>
-            <input className="sign-up-page-input-fields" type="text" />
+            <input className="sign-up-page-input-fields" required onChange={onChangePassword} type="text" />
 
             <div className="sign-up-page-submit-btn-div">
-              <button className="sign-up-button">Reset Password</button>
+              <button onClick={OnSubmitPassword} className="sign-up-button">Reset Password</button>
             </div>
           </div>
           <div  className='sign-in-page-link-div'>

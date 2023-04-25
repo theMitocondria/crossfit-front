@@ -1,7 +1,16 @@
 import React from "react";
 import "./Profile.css";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../../redux/slices/userSlice";
 
 const Profile = () => {
+  const dispatch=useDispatch();
+
+  const logoutCLick=()=>{
+    const check="my";
+    console.log("logout is clicked");
+    dispatch(logoutAction({check}));
+  }
   return (
     <div className="profile-page-background">
       <div className="main-profile-div">
@@ -98,6 +107,9 @@ const Profile = () => {
           </div>
           </div>
         </div>
+      </div>
+      <div className="logout-btn-profile-div">
+         <button className="logout-btn" onClick={logoutCLick}>Logout</button>
       </div>
     </div>
   );

@@ -35,7 +35,7 @@ const swiper = ({ data }) => {
         modules={[Autoplay]}
         // navigation
         onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log("slide change")}
+  
       >
         {data.map((item) => (
           <SwiperSlide className="card">

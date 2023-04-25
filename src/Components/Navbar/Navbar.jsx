@@ -50,8 +50,8 @@ const Navbar = () => {
           <Link className={styles.navLink} to="/fitbot"> FitBot</Link>
           </li>
           <li className={styles.menuItem}>
-          <button className={styles.cvdownbtn}><img className='user-logo' src="https://res.cloudinary.com/dycitvrpg/image/upload/v1681625760/user_ynk5rx.png" alt="" /></button>
-
+          <Link className={styles.navLink} to="/profile"><button className={styles.cvdownbtn}><img className='user-logo' src="https://res.cloudinary.com/dycitvrpg/image/upload/v1681625760/user_ynk5rx.png" alt="" /></button>
+</Link>
           </li>
 
         </ul>

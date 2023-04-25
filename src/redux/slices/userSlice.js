@@ -1,32 +1,33 @@
 import axios from "axios";
 import baseURL from "../../utils/baseURL";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isAsyncThunkAction } from "@reduxjs/toolkit";
+import { get } from "mongoose";
 
 const initialState = {
     // ye wali loading or error jab use hoge jab user register krega 
     loading: false,
     error: null,
     inTempStorage: false,
-    userLessAuth:{
+    userLessAuth: {
         // ye wale loading or error jab user login kregea
         loading: false,
-        error:null,
+        error: null,
         userLessInfo: localStorage.getItem('userLessInfo') ? JSON.parse(localStorage.getItem('userLessInfo')) : null,
     },
-    userAuth:{
+    userAuth: {
         loading: false,
         error: null,
         userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,
     }
 }
 
-export const registerUserAction = createAsyncThunk('user/register', async(
-    {name, email, password},
-    {rejectWithValue, getState, dispatch}
+export const registerUserAction = createAsyncThunk('user/register', async (
+    { name, email, password },
+    { rejectWithValue, getState, dispatch }
 ) => {
-    try{
+    try {
         console.log(name, email, password)
-        const {data} = await axios.post(`${baseURL}/users/register`, {
+        const { data } = await axios.post(`${baseURL}/users/register`, {
             name, email, password
         });
 
@@ -35,17 +36,17 @@ export const registerUserAction = createAsyncThunk('user/register', async(
         //saving the user into localStorage
         // localStorage.setItem('userInfo', JSON.stringify(data));
         return data;
-    }catch(error){
+    } catch (error) {
         console.log(error?.response?.data)
         return rejectWithValue(error?.response?.data);
     }
 })
 
-export const verifyUserOTPAction = createAsyncThunk('user/verifyOTP', async(
-    {otp},
-    {rejectWithValue, getState, dispatch}
+export const verifyUserOTPAction = createAsyncThunk('user/verifyOTP', async (
+    { otp },
+    { rejectWithValue, getState, dispatch }
 ) => {
-    try{
+    try {
 
         const token = getState()?.users?.userLessAuth?.user?.token;
 
@@ -54,34 +55,32 @@ export const verifyUserOTPAction = createAsyncThunk('user/verifyOTP', async(
                 token: `${token}`
             }
         }
-        const {data} = await axios.post(`${baseURL}/users/register/otp`, {
+        const { data } = await axios.post(`${baseURL}/users/register/otp`, {
             otp
         },
-        config);
+            config);
 
         localStorage.setItem('userInfo', JSON.stringify(data));
 
         //saving the user into localStorage
         // localStorage.setItem('userInfo', JSON.stringify(data));
         return data;
-    }catch(error){
+    } catch (error) {
         console.log(error?.response?.data)
         return rejectWithValue(error?.response?.data);
     }
 })
 
-
-
-export const signInAction = createAsyncThunk('user/signin', async(
-    { email, password},
-    {rejectWithValue, getState, dispatch}
+export const signInAction = createAsyncThunk('user/signin', async (
+    { email, password },
+    { rejectWithValue, getState, dispatch }
 ) => {
-    try{
-        console.log(email,password);
-        const {data} = await axios.post(`${baseURL}/users/login`, {
+    try {
+        console.log(email, password);
+        const { data } = await axios.post(`${baseURL}/users/login`, {
             email, password
         });
-        console.log(email,password);
+        console.log(email, password);
         localStorage.setItem('userInfo', JSON.stringify(data));
 
         console.log(data);
@@ -89,20 +88,64 @@ export const signInAction = createAsyncThunk('user/signin', async(
         //saving the user into localStorage
         // localStorage.setItem('userInfo', JSON.stringify(data));
         return data;
-    }catch(error){
+    } catch (error) {
+        console.log(error?.response?.data)
+        return rejectWithValue(error?.response?.data);
+    }
+})
+
+export const forgetPasswordAction = createAsyncThunk('forget/password', async ({ email },
+    { rejectWithValue }
+) => {
+    try {
+        console.log(`is email ${email}`);
+        const { data } = await axios.post(`${baseURL}/users/forget/password`, { email });
+        return data;
+    } catch (error) {
+        console.log(error?.response?.data)
+        return rejectWithValue(error?.response?.data);
+    }
+})
+
+export const resetPasswordAction = createAsyncThunk('reset/password', async ({ resetPassword, id }, { rejectWithValue }) => {
+    try {
+        console.log(resetPassword);
+        const password = resetPassword;
+        const { data } = await axios.post(`${baseURL}/users/reset/password/:id`, { password, id });
+        return data;
+    } catch (error) {
         console.log(error?.response?.data)
         return rejectWithValue(error?.response?.data);
     }
 })
 
 
+export const logoutAction = createAsyncThunk(`/logout/profile`, async ({check},{getState,rejectWithValue}) => {
+    try {
+        const token = getState()?.users?.userAuth?.userInfo?.user?.token;
+        
+        console.log(check,token);
+        const config = {
+            headers: {
+                token: `${token}`
+            }
+        }
+        localStorage.removeItem('userInfo');
+        
+        const { data } = "user logout successfull";
+        return data;
+    } catch (error) {
+        return rejectWithValue(error?.response?.data);
 
+    }
+
+})
 const userSlice = createSlice({
-    name:"users",
+    name: "users",
     initialState,
     extraReducers: (builder) => {
         builder.addCase(registerUserAction.pending, (state, action) => {
-            state.loading = true;  
+            state.loading = true;
         });
         builder.addCase(registerUserAction.fulfilled, (state, action) => {
             state.loading = false;
@@ -116,7 +159,7 @@ const userSlice = createSlice({
 
 
         builder.addCase(verifyUserOTPAction.pending, (state, action) => {
-            state.loading = true;  
+            state.loading = true;
         });
         builder.addCase(verifyUserOTPAction.fulfilled, (state, action) => {
             state.loading = false;
@@ -130,7 +173,7 @@ const userSlice = createSlice({
 
 
         builder.addCase(signInAction.pending, (state, action) => {
-            state.loading = true;  
+            state.loading = true;
         });
         builder.addCase(signInAction.fulfilled, (state, action) => {
             state.loading = false;
@@ -140,6 +183,37 @@ const userSlice = createSlice({
         builder.addCase(signInAction.rejected, (state, action) => {
             state.error = action.payload;
             state.loading = false;
+        });
+
+        builder.addCase(forgetPasswordAction.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(forgetPasswordAction.fulfilled, (state) => {
+            state.loading = false;
+        });
+        builder.addCase(forgetPasswordAction.rejected, (state, action) => {
+            state.error = action.payload;
+        });
+
+        builder.addCase(resetPasswordAction.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(resetPasswordAction.fulfilled, (state) => {
+            state.loading = false;
+        });
+        builder.addCase(resetPasswordAction.rejected, (state, action) => {
+            state.error = action.payload;
+        });
+
+        builder.addCase(logoutAction.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(logoutAction.fulfilled, (state) => {
+            state.loading = false;
+            state.userAuth=null;
+        });
+        builder.addCase(logoutAction.rejected, (state, action) => {
+            state.error = action.payload;
         });
     }
 })
