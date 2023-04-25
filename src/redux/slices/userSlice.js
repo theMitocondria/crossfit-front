@@ -140,6 +140,56 @@ export const logoutAction = createAsyncThunk(`/logout/profile`, async ({check},{
     }
 
 })
+
+
+
+export const userShippingAdressAction = createAsyncThunk('user/shippingAdress', async (
+    { shippingName:name, city, pincode, state, country, phoneNumber },
+    { rejectWithValue, getState, dispatch }
+) => {
+    try {
+
+        console.log("hi in action shipping ")
+
+        const token = getState()?.users?.userAuth?.userInfo?.user?.token;
+        console.log(getState());
+        console.log(token);
+        
+        const config = {
+            headers: {
+                token: `${token}`
+            }
+        }
+        
+        const shippingAddress={
+            name, city, pincode, state, country,phone: phoneNumber
+        }
+
+
+        console.log(name, city, pincode, state, country, phoneNumber)
+        const { data } = await axios.post(`${baseURL}/users/address`, {
+            shippingAddress
+        },
+        config);
+
+        console.log("after successful request")
+
+        console.log(data);
+
+        //saving the user into localStorage
+        // localStorage.setItem('userInfo', JSON.stringify(data));
+        return data;
+    } catch (error) {
+        console.log(error?.response?.data)
+        return rejectWithValue(error?.response?.data);
+    }
+})
+
+
+
+
+
+
 const userSlice = createSlice({
     name: "users",
     initialState,
@@ -177,7 +227,7 @@ const userSlice = createSlice({
         });
         builder.addCase(signInAction.fulfilled, (state, action) => {
             state.loading = false;
-            state.userAuth = action.payload;
+            state.userAuth.userInfo = action.payload;
             //userinfo ka data apne app localstorage se utha lega
         });
         builder.addCase(signInAction.rejected, (state, action) => {
@@ -205,16 +255,35 @@ const userSlice = createSlice({
             state.error = action.payload;
         });
 
+
+
+
         builder.addCase(logoutAction.pending, (state) => {
             state.loading = true;
         });
         builder.addCase(logoutAction.fulfilled, (state) => {
             state.loading = false;
-            state.userAuth=null;
+            state.userAuth.userInfo=null;
         });
         builder.addCase(logoutAction.rejected, (state, action) => {
             state.error = action.payload;
         });
+
+
+        builder.addCase(userShippingAdressAction.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(userShippingAdressAction.fulfilled, (state,action) => {
+            state.loading = false;
+            state.userAuth.userInfo=action.payload;
+        });
+        builder.addCase(userShippingAdressAction.rejected, (state, action) => {
+            state.error = action.payload;
+        });
+
+
+
+
     }
 })
 

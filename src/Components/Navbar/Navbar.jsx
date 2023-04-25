@@ -3,10 +3,13 @@ import './Navbar.css'
 import styles from "./Nav.module.css"
 import { HashLink } from 'react-router-hash-link'
 import { Link} from 'react-router-dom'
-
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 const Navbar = () => {
   const [open,setstate] = useState(0);
+  const {user}=useSelector((state)=>state.users.userAuth?.userInfo);
+  console.log(user);
   const toggleBodyClass = () => {
     document.body.classList.toggle(styles.menuActive);
        (open === 0 )? setstate(1) : setstate(0);
@@ -50,7 +53,7 @@ const Navbar = () => {
           <Link className={styles.navLink} to="/fitbot"> FitBot</Link>
           </li>
           <li className={styles.menuItem}>
-          <Link className={styles.navLink} to="/profile"><button className={styles.cvdownbtn}><img className='user-logo' src="https://res.cloudinary.com/dycitvrpg/image/upload/v1681625760/user_ynk5rx.png" alt="" /></button>
+          <Link className={styles.navLink} to="/profile"><button className={styles.cvdownbtn}><img className='user-logo' src={user?.avatar} alt="" /></button>
 </Link>
           </li>
 

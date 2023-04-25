@@ -54,6 +54,7 @@
 
 .left-profile-img-avatar{
     height: 15vh;
+    border-radius: 50%;
 }
 .button-upload-profile-div{
     display: flex;
