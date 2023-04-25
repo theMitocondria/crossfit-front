@@ -4,12 +4,15 @@ import { Link,useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUserAction } from '../../redux/slices/userSlice'
+import LoadingComponent from '../LoadingComponent/Loading'
 
 const SignUp = () => {
 
 
   const dispatch = useDispatch();
   let navigate = useNavigate();
+
+  const {loading, error} = useSelector((state) => state.users);
 
 
   const [name, setName] = useState("gautam")
@@ -79,7 +82,9 @@ const onSubmitHanlder = async(e) => {
                    
 
                    <div className='sign-up-page-submit-btn-div'>
-                   <button onClick={onSubmitHanlder} className='sign-up-button'>Submit</button>
+                   {
+                    loading ? <LoadingComponent /> : <button onClick={onSubmitHanlder} className='sign-up-button'>Submit</button>
+                   }
                    </div>
                 </div>
 

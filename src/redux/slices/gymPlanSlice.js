@@ -7,12 +7,12 @@ import { createAsyncThunk, createSlice, isAsyncThunkAction } from "@reduxjs/tool
 const initialState = {
     loading: false,
     error: null,
-    DietPlanImage: null,
+    gymPlanImage: null,
 
 }
 
 
-export const DietPlanAction = createAsyncThunk('diet/plan', async (
+export const gymPlanAction = createAsyncThunk('gym/plan', async (
     { message},
     { rejectWithValue, getState, dispatch }
 ) => {
@@ -49,18 +49,18 @@ export const DietPlanAction = createAsyncThunk('diet/plan', async (
 
 
 
-const DietPlanSlice = createSlice({
-    name: "dietPlan",
+const gymPlanSlice = createSlice({
+    name: "gymPlan",
     initialState,
     extraReducers: (builder) => {
-        builder.addCase(DietPlanAction.pending, (state, action) => {
+        builder.addCase(gymPlanAction.pending, (state, action) => {
             state.loading = true;
         });
-        builder.addCase(DietPlanAction.fulfilled, (state, action) => {
+        builder.addCase(gymPlanAction.fulfilled, (state, action) => {
             state.loading = false;
-            state.DietPlanImage = action.payload;
+            state.gymPlanImage = action.payload;
         });
-        builder.addCase(DietPlanAction.rejected, (state, action) => {
+        builder.addCase(gymPlanAction.rejected, (state, action) => {
             state.error = action.payload;
             state.loading = false;
         });
@@ -68,5 +68,5 @@ const DietPlanSlice = createSlice({
 });
 
 
-const DietPlanReducer = DietPlanSlice.reducer;
-export default DietPlanReducer;
+const gymPlanReducer = gymPlanSlice.reducer;
+export default gymPlanReducer;

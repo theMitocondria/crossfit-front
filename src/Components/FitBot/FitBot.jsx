@@ -15,31 +15,22 @@ const FitBot = () => {
     chatRef.current.scrollTop = chatRef.current.scrollHeight;
   }, [messages]);
 
-  const animation2 = () => {
-    setMessages([...messages, "About to come..."]);
-    animation();
-  };
 
-  let animationinterval2;
 
-  const animation = () => {
-    setMessages([...messages, "On the way...."]);
-    animationinterval2 = setInterval((animation2, 3000));
-  };
+ 
 
   const sendMessagefunction = async () => {
     messages.push(sendMessage);
 
     setMessages([...messages, "Please wait, we are seaching..."]);
 
-    const animationinterval = setInterval(animation, 3000);
+  
 
     setSendMessage("");
     const { data } = await axios.post("http://localhost:3000/message", {
       message: sendMessage,
     });
-    clearInterval(animationinterval);
-    clearInterval(animationinterval2);
+  
     setMessages([...messages, data.message]);
   };
 

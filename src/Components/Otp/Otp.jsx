@@ -3,6 +3,7 @@ import "./otp.css";
 import { Link,useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { verifyUserOTPAction } from '../../redux/slices/userSlice'
+import LoadingComponent from "../LoadingComponent/Loading";
 
 
 
@@ -11,6 +12,8 @@ const Otp = () => {
   
   const dispatch = useDispatch();
   let navigate = useNavigate();
+
+  const {loading, error} =useSelector((state) => state.users)
 
   const [otp, setOtp] = useState('');
 
@@ -55,7 +58,9 @@ const Otp = () => {
                    
 
                    <div className='sign-up-page-submit-btn-div'>
-                   <button onClick={onSubmitHanlder} className='sign-up-button'>Submit</button>
+                   {
+                    loading ? <LoadingComponent /> : <button onClick={onSubmitHanlder} className='sign-up-button'>Submit</button>
+                   }
                    </div>
                 </div>
 
