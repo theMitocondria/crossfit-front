@@ -212,7 +212,7 @@ const userSlice = createSlice({
         });
         builder.addCase(verifyUserOTPAction.fulfilled, (state, action) => {
             state.loading = false;
-            state.userAuth = action.payload;
+            state.userAuth.userInfo = action.payload;
             //userinfo ka data apne app localstorage se utha lega
         });
         builder.addCase(verifyUserOTPAction.rejected, (state, action) => {

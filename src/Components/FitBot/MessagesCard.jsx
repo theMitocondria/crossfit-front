@@ -2,7 +2,7 @@ import React from 'react'
 import "./MessagesCard.css"
 
 const MessagesCard = ({message, index}) => {
-    if(index&1){
+    if(!(index&1)){
       return ( 
         <div className="message-card message-card-left" >
         
