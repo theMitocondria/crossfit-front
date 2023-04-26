@@ -188,7 +188,6 @@ export const userShippingAdressAction = createAsyncThunk('user/shippingAdress', 
 
 
 
-
 const userSlice = createSlice({
     name: "users",
     initialState,
@@ -279,8 +278,6 @@ const userSlice = createSlice({
         builder.addCase(userShippingAdressAction.rejected, (state, action) => {
             state.error = action.payload;
         });
-
-
 
 
     }

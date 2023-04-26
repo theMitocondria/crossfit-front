@@ -3,6 +3,7 @@ import userReducer from "../slices/userSlice";
 import DietPlanReducer from "../slices/dietPlanSlice";
 import gymPlanReducer from "../slices/gymPlanSlice";
 import chatReducer from "../slices/fitbotSlice";
+import testimonialReducer from "../slices/testimonialSlices";
 
 const store = configureStore({
     reducer:{
@@ -10,6 +11,7 @@ const store = configureStore({
         dietPlan : DietPlanReducer,
         gymPlan: gymPlanReducer,
         fitbotChat: chatReducer,
+        testimonial:testimonialReducer,
     }
 })
 

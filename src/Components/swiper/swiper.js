@@ -2,13 +2,23 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Autoplay, Navigation, Pagination, Scrollbar, A11y } from "swiper";
-
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "./swipper.css";
 import { Link } from "react-router-dom";
-const swiper = ({ data }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { allTestimonialsAction } from "../../redux/slices/testimonialSlices";
+const SwiperComponent = ({ data }) => {
+  const dispatch=useDispatch();
+  useEffect(()=>{
+    const mess="hi";
+    dispatch(allTestimonialsAction(mess));
+  },[dispatch]);
+
+  let {test}=useSelector((state)=>state.testimonial?.testimonials);
+  console.log(test);
   return (
     <div className="app1">
       <div className="upper">
@@ -57,4 +67,4 @@ const swiper = ({ data }) => {
   );
 };
 
-export default swiper;
+export default SwiperComponent;

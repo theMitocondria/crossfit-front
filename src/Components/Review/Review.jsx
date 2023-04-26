@@ -1,7 +1,32 @@
-import React from 'react'
-import "./Review.css"
+import React, { useState } from 'react'
+import "./Review.css";
+import { useDispatch } from 'react-redux';
+import { createTestimonialsReview } from '../../redux/slices/testimonialSlices';
+
 const Review = () => {
+    const [heading,setHeading]=useState();
+    const [Description,setDescription]=useState();
+    const dispatch=useDispatch();
+
+    
+    const onChangeHeading=(e)=>{
+         setHeading(e.target.value);
+         console.log(heading);
+    }
+
+    const onChangeDescription=(e)=>{
+        setDescription(e.target.value);
+        console.log(Description);
+    }
+
+    const onSubmitTestimmonials=(e)=>{
+        e.preventDefault();
+        console.log("testimonials is working");
+        console.log(heading,Description);
+        dispatch(createTestimonialsReview({heading,Description}));
+    }
     return (
+
         <div className='Review-main'>
             <div className='Review-main-box'>
                 <div className='Review-left'>
@@ -10,16 +35,11 @@ const Review = () => {
                     </div>
                     <div className='Review-main-form'>
                         <form>
-                            <input className="Review-main-form-imput-tags"type='text' placeholder='Name'/>
+                            <input className="Review-main-form-imput-tags" type='text' value={heading} placeholder='Heading' onChange={onChangeHeading}/>
                             <hr/>
-                            <input className="Review-main-form-imput-tags" type='email' placeholder='Email Id'/>
-                            <hr/>
-                            <input type='number' className="Review-main-form-imput-tags"placeholder='Phone Number'/>
-                            <hr/>
-                            <input type='text'className="Review-main-form-imput-tags" placeholder='Write your feedback'/>
-                            <hr/>
+                            <textarea className='Review-main-form-imput-textarea' type='text' value={Description} placeholder='Write your review in about 50 words' onChange={onChangeDescription}/>
                             <div className='Review-main-form-imput-button-div'>
-                            <button type='submit' className="Review-main-form-imput-button">Submit</button>
+                            <button className="Review-main-form-imput-button" onClick={onSubmitTestimmonials}>Submit</button>
                             </div>
                         </form>
                     </div>
