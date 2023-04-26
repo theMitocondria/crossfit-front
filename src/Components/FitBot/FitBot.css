@@ -31,12 +31,12 @@
 .chat-box {
   /* margin-left: -100px; */
   right: 0;
-  width: 400px;
+  width: 500px;
   max-width: 100%;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  height: 50vh;
+  height: 70vh;
   position: absolute;
   top: 10vmax;
   left: 30vmax;

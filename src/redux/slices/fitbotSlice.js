@@ -7,12 +7,14 @@ import { createAsyncThunk, createSlice, isAsyncThunkAction } from "@reduxjs/tool
 const initialState = {
     loading: false,
     error: null,
-    DietPlanImage: null,
+    chat: {
+        message:"Hello, How can I assist you?"
+    },
 
 }
 
 
-export const DietPlanAction = createAsyncThunk('diet/plan', async (
+export const fitbotAction = createAsyncThunk('chat', async (
     { message},
     { rejectWithValue, getState, dispatch }
 ) => {
@@ -29,7 +31,7 @@ export const DietPlanAction = createAsyncThunk('diet/plan', async (
             }
         }
         
-        const { data } = await axios.post(`${baseURL}/plan`, {
+        const { data } = await axios.post(`${baseURL}/chat`, {
             message,
         }, 
         config);
@@ -40,8 +42,8 @@ export const DietPlanAction = createAsyncThunk('diet/plan', async (
         // localStorage.setItem('userInfo', JSON.stringify(data));
         return data;
     } catch (error) {
-        console.log(error?.response?.data)
-        return rejectWithValue(error?.response?.data);
+        console.log(error)
+        return rejectWithValue(error?.message);
     }
 })
 
@@ -49,18 +51,18 @@ export const DietPlanAction = createAsyncThunk('diet/plan', async (
 
 
 
-const DietPlanSlice = createSlice({
-    name: "dietPlan",
+const chatSlice = createSlice({
+    name: "fitbotChat",
     initialState,
     extraReducers: (builder) => {
-        builder.addCase(DietPlanAction.pending, (state, action) => {
+        builder.addCase(fitbotAction.pending, (state, action) => {
             state.loading = true;
         });
-        builder.addCase(DietPlanAction.fulfilled, (state, action) => {
+        builder.addCase(fitbotAction.fulfilled, (state, action) => {
             state.loading = false;
-            state.DietPlanImage = action.payload;
+            state.chat = action.payload;
         });
-        builder.addCase(DietPlanAction.rejected, (state, action) => {
+        builder.addCase(fitbotAction.rejected, (state, action) => {
             state.error = action.payload;
             state.loading = false;
         });
@@ -68,5 +70,5 @@ const DietPlanSlice = createSlice({
 });
 
 
-const DietPlanReducer = DietPlanSlice.reducer;
-export default DietPlanReducer;
+const chatReducer = chatSlice.reducer;
+export default chatReducer;

@@ -2,11 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "./FitBot.css";
 import MessagesCard from "./MessagesCard";
+import { useDispatch, useSelector } from "react-redux";
+import { fitbotAction } from "../../redux/slices/fitbotSlice";
+import LoadingComponent from "../LoadingComponent/Loading";
 
 const FitBot = () => {
-  const [messages, setMessages] = useState([
-    "Hello USER, I am FitBot, how can i help you.",
-  ]);
+
+  const dispatch = useDispatch();
+
+  const [messages, setMessages] = useState([]);
   const [sendMessage, setSendMessage] = useState("");
 
   const chatRef = useRef("");
@@ -15,33 +19,33 @@ const FitBot = () => {
     chatRef.current.scrollTop = chatRef.current.scrollHeight;
   }, [messages]);
 
-  const animation2 = () => {
-    setMessages([...messages, "About to come..."]);
-    animation();
-  };
 
-  let animationinterval2;
+  const {loading ,error, chat} = useSelector((state) => state.fitbotChat);
 
-  const animation = () => {
-    setMessages([...messages, "On the way...."]);
-    animationinterval2 = setInterval((animation2, 3000));
-  };
+
+  useEffect(() => {
+    setMessages([...messages, chat?.message])
+  },[chat])
+ 
 
   const sendMessagefunction = async () => {
     messages.push(sendMessage);
 
-    setMessages([...messages, "Please wait, we are seaching..."]);
+    // setMessages([...messages, "Please wait, we are seaching..."]);
 
-    const animationinterval = setInterval(animation, 3000);
+  
 
     setSendMessage("");
-    const { data } = await axios.post("http://localhost:3000/message", {
-      message: sendMessage,
-    });
-    clearInterval(animationinterval);
-    clearInterval(animationinterval2);
-    setMessages([...messages, data.message]);
+
+    await dispatch(fitbotAction({message :sendMessage}))
+    console.log(chat.message)
+    // setMessages([...messages,chat?.message])
+   
+  
+    // setMessages([...messages, data.message]);
   };
+
+ 
 
   return (
     < div className="fit-bot-body">
@@ -74,7 +78,9 @@ const FitBot = () => {
               type="text"
               placeholder="Ask a question..."
             />
-            <button onClick={sendMessagefunction}>Send</button>
+           {
+            loading ? <LoadingComponent color='black' /> :  <button onClick={sendMessagefunction}>Send</button>
+           }
           </div>
         </div>
         <div className="fitbot-right">

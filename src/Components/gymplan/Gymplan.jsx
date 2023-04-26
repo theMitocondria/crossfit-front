@@ -3,8 +3,11 @@ import "./gymplan.css";
 import "../DietPlan/dietplan.css"
 import GymplanNavbar from "./gymplanNavbar";
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { PlanAction } from '../../redux/slices/dietPlanSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import LoadingComponent from '../LoadingComponent/Loading';
+import { saveAs } from 'file-saver';
+import { gymPlanAction } from '../../redux/slices/gymPlanSlice';
+
 const Gymplan = () => {
     const [age, setage] = useState();
     const [height, setHeight] = useState();
@@ -14,9 +17,12 @@ const Gymplan = () => {
     const [TainingSplit, setTrainingSplit] = useState();
     const [duration, setDuration] = useState();
     const [workout, setWorkout] = useState();
-    let isImage;
+
 
     const dispatch = useDispatch();
+    const {loading, error, gymPlanImage} = useSelector((state) => state.gymPlan)
+   
+   
 
     const ageChangeHandler=(e)=>{
         setage(e.target.value);
@@ -58,8 +64,12 @@ const Gymplan = () => {
                             of ${TainingSplit} with a duration of ${duration} at ${workout}.`
         console.log(message);
 
-        dispatch(PlanAction({message}));
+        dispatch(gymPlanAction({message}));
 
+    }
+
+    const downloadImage = () => {
+        saveAs(gymPlanImage.image, 'gymPlan.jpg') // Put your image url here.
     }
 
     return (
@@ -130,7 +140,15 @@ const Gymplan = () => {
                     </div>
                 </div>
                 <div className='gymplan-div-button'>
-                <button className='gymplan-ac-button' onClick={onGymPlanSubmit}>Submit</button>
+               
+
+                {
+                            loading ? (<LoadingComponent />) : ( <button className='form-button' onClick={onGymPlanSubmit}>Submit</button>)
+                           }
+
+                           {
+                            gymPlanImage ? ( <button onClick={downloadImage} className='form-button'>Download Your Gym Plan</button>) : null
+                           }
                 </div>
             </div>
         </div>

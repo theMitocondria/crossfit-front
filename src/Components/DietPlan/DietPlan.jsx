@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import "./dietplan.css"
 import data from "./data.js";
-import { useDispatch } from 'react-redux';
-import { PlanAction } from '../../redux/slices/dietPlanSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { DietPlanAction } from '../../redux/slices/dietPlanSlice';
+import LoadingComponent from '../LoadingComponent/Loading';
+import { saveAs } from 'file-saver';
 
+
+
+   
 
 
 const DietPlan = () => {
@@ -13,10 +18,13 @@ const DietPlan = () => {
     const [weight, setWeight] = useState();
     const [gender, setgender] = useState();
     const dispatch=useDispatch();
+
+    const {loading, error, DietPlanImage} = useSelector((state) => state.dietPlan)
+   
+   
     
     const ageChangeHandler=(e)=>{
         setage(e.target.value);
-
     }
 
     const heightChangeHandler=(e)=>{
@@ -36,9 +44,14 @@ const DietPlan = () => {
                          qoute for motivation too`
         console.log(message);
 
-        dispatch(PlanAction({message}));
+        dispatch(DietPlanAction({message}));
 
     }
+
+    const downloadImage = () => {
+        saveAs(DietPlanImage.image, 'dietPlan.jpg') // Put your image url here.
+    }
+    
     const handleButtonClick = (buttonId) => {
         if (selectedButtons.includes(buttonId)) {
             setSelectedButtons(selectedButtons.filter((id) => id !== buttonId));
@@ -96,7 +109,13 @@ const DietPlan = () => {
                             </div>
                         </div>
                         <div className='form-button-div'>
-                            <button onClick={onDietPlanSubmit} className='form-button'>Submit</button>
+                           {
+                            loading ? (<LoadingComponent />) : ( <button onClick={onDietPlanSubmit} className='form-button'>Submit</button>)
+                           }
+
+                           {
+                            DietPlanImage ? ( <button onClick={downloadImage} className='form-button'>Download Your Diet Plan</button>) : null
+                           }
                         </div>
                 </div>
             {/* </div> */}

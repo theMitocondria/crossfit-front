@@ -33,31 +33,39 @@ import GymplanNavbar from "./Components/gymplan/gymplanNavbar";
 import Otp from "./Components/Otp/Otp"
 import ForgetPassword from "./Components/ForgetPassword/ForgetPassword";
 import ResetPassword from "./Components/ForgetPassword/ResetPassword";
+import { useSelector } from "react-redux";
 
 
 function App() {
+
+  // const isLoggedIn = useSelector((state) => state.users.userAuth.userInfo.token);
+  // console.log(isLoggedIn);
   return (
     <BrowserRouter>
       <Routes>
+
 
       <Route path="unlogin" element={ <BeforeLoginLandingPage /> } />
 
         <Route
           path="/"
           element={
-            <>
-              <Navbar />
-              <LandingPage />
-              <WhyCrossFit />
-              <Swiper data={data} />
-              <Wearecrossfit />
-              <GetInTouch />
-              <Footer />
-            </>
+           <>
+            <Navbar />
+            <LandingPage />
+            <WhyCrossFit />
+            <Swiper data={data} />
+            <Wearecrossfit />
+            <GetInTouch />
+            <Footer />
+          </>
           }
         />
 
-        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signin" element={
+          <SignIn />
+        
+        } />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/otp" element={<Otp />} />
         <Route path='/forget/password' element ={<ForgetPassword />} />

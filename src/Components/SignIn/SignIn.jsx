@@ -4,6 +4,7 @@ import { Link,useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInAction } from '../../redux/slices/userSlice'
+import LoadingComponent from '../LoadingComponent/Loading'
 
 const SignIn = () => {
   
@@ -23,7 +24,7 @@ const SignIn = () => {
   }
 
   // const userInfo = useSelector((state) => state.users?.userAuth?.userInfo)
-  
+  const {loading, error} = useSelector((state) => state.users)
 
   const onSubmitHanlder = async(e) => {
     // e.preventDefault();
@@ -67,7 +68,9 @@ const SignIn = () => {
                    
 
                    <div className='sign-up-page-submit-btn-div'>
-                   <button onClick={onSubmitHanlder} className='sign-up-button'>Submit</button>
+                    {
+                      loading ? <LoadingComponent /> : <button onClick={onSubmitHanlder} className='sign-up-button'>Submit</button>
+                    }
                    </div>
                 </div>
 
