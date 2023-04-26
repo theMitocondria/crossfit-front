@@ -1,6 +1,46 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./Improve.css"
+import { useDispatch, useSelector } from 'react-redux';
+import { feedbackAction } from '../../redux/slices/feedbackSlice';
+import WhiteLoadingComponent from '../LoadingComponent/whiteLoading';
 const Improve = () => {
+
+    const dispatch = useDispatch()
+    const {error, loading} = useSelector((state) => state.feedback)
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [number, setNumber] = useState("");
+    const [feedback, setFeedback] = useState("");
+
+    const onNameChange = (e) => {
+        setName(e.target.value);
+    }
+
+    const onEmailChange = (e) => {
+        setEmail(e.target.value);
+    }
+
+    const onNumberChange = (e) => {
+        setNumber(e.target.value);
+    }
+
+    const onFeedbackChange = (e) => {
+        setFeedback(e.target.value);
+    }
+
+    const onSubmitBtnHandler = (e) => {
+        e.preventDefault();
+
+        dispatch(feedbackAction({name, email, number, feedback}))
+
+        setNumber("");
+        setEmail("");
+        setFeedback("");
+        setName("");
+
+    }
+
     return (
         <div className='improve-main'>
             <div className='improve-main-box'>
@@ -9,17 +49,19 @@ const Improve = () => {
                         <h3 className='improve-main-heading-para'>Help Us Improve</h3>
                     </div>
                     <div className='improve-main-form'>
-                        <form>
-                            <input className="improve-main-form-imput-tags"type='text' placeholder='Name'/>
+                        <form onSubmit={onSubmitBtnHandler}>
+                            <input onChange={onNameChange} value={name} required className="improve-main-form-imput-tags"type='text' placeholder='Name'/>
                             <hr/>
-                            <input className="improve-main-form-imput-tags" type='email' placeholder='Email Id'/>
+                            <input onChange={onEmailChange} value={email} required className="improve-main-form-imput-tags" type='email' placeholder='Email Id'/>
                             <hr/>
-                            <input type='number' className="improve-main-form-imput-tags"placeholder='Phone Number'/>
+                            <input onChange={onNumberChange} value={number} required type='number' className="improve-main-form-imput-tags"placeholder='Phone Number'/>
                             <hr/>
-                            <input type='text'className="improve-main-form-imput-tags" placeholder='Write your feedback'/>
+                            <input onChange={onFeedbackChange} value={feedback} required type='text'className="improve-main-form-imput-tags" placeholder='Write your feedback'/>
                             <hr/>
                             <div className='improve-main-form-imput-button-div'>
-                            <button type='submit' className="improve-main-form-imput-button">Submit</button>
+                            {
+                                loading ? <WhiteLoadingComponent /> :  <button  type='submit' className="improve-main-form-imput-button">Submit</button>
+                            }
                             </div>
                         </form>
                     </div>

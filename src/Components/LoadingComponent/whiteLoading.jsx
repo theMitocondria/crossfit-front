@@ -1,8 +1,8 @@
 import React from "react";
 import ReactLoading from "react-loading";
 
-const LoadingComponent = ({color}) => {
-  let setColor = color ? color : "white"
+const WhiteLoadingComponent = () => {
+
   return (
     <div
       style={{
@@ -10,9 +10,9 @@ const LoadingComponent = ({color}) => {
         justifyContent: "center",
         alignItems: "flex-end",
       }}>
-      <ReactLoading type="bars" color="setColor" />
+      <ReactLoading type="bars" color="white" />
     </div>
   );
 };
 
-export default LoadingComponent;
+export default WhiteLoadingComponent;
