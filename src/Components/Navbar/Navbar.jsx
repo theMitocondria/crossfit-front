@@ -31,7 +31,7 @@ const Navbar = () => {
     // </div>
     <div>
     <nav className={styles.navbar}>
-      <div className={styles.name}><HashLink to='/#home'> <img className='crossfit-logo' src="https://res.cloudinary.com/dycitvrpg/image/upload/v1681382796/logo_xx6npu.png" alt="logo" /> </HashLink>
+      <div className={styles.name}><Link to='/'> <img className='crossfit-logo' src="https://res.cloudinary.com/dycitvrpg/image/upload/v1681382796/logo_xx6npu.png" alt="logo" /> </Link>
 </div>
       <div className={styles.pushLeft}>
         <button id="menu-toggler" data-class={styles.menuActive} className={styles.hamburger} onClick={toggleBodyClass}>

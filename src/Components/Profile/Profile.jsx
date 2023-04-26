@@ -15,12 +15,12 @@ const Profile = () => {
   }
 
 
-  const [shippingName, setShippingName] = useState("")
-  const [city, setCity] = useState("")
-  const [pincode, setPincode] = useState("")
-  const [state, setState] = useState("")
-  const [country, setCountry] = useState("")
-  const [phoneNumber, setPhoneNumber] = useState("")
+  const [shippingName, setShippingName] = useState(user?.shippingAddress?.name)
+  const [city, setCity] = useState(user?.shippingAddress?.city)
+  const [pincode, setPincode] = useState(user?.shippingAddress?.pincode)
+  const [state, setState] = useState(user?.shippingAddress?.state)
+  const [country, setCountry] = useState(user?.shippingAddress?.country)
+  const [phoneNumber, setPhoneNumber] = useState(user?.shippingAddress?.phone)
   const [files,setfiles]=useState([]);
 
   const shippingNameChangeHalder = (e) =>{
@@ -119,27 +119,27 @@ const Profile = () => {
                 <div className="left-profile-shipping-address-attributes">
                   <div className="input-div-profile-page">
                     <label className="left-profile-name-label">Name</label>
-                    <input onChange={shippingNameChangeHalder} value={user?.shippingAddress?.name} type="text" className="left-profile-name-input" />
+                    <input onChange={shippingNameChangeHalder} value={shippingName} type="text" className="left-profile-name-input" />
                   </div>
                   <div className="input-div-profile-page">
                     <label className="left-profile-name-label">City</label>
-                    <input onChange={cityChangeHalder} type="text" value={user?.shippingAddress?.city} className="left-profile-name-input" />
+                    <input onChange={cityChangeHalder} type="text" value={city} className="left-profile-name-input" />
                   </div>
                   <div className="input-div-profile-page">
                     <label className="left-profile-name-label">Pincode</label>
-                    <input onChange={pincodeChangeHalder} type="Number" value={user?.shippingAddress?.pincode} className="left-profile-name-input" />
+                    <input onChange={pincodeChangeHalder} type="Number" value={pincode} className="left-profile-name-input" />
                   </div>
                   <div className="input-div-profile-page">
                     <label className="left-profile-name-label">state</label>
-                    <input onChange={stateChangeHalder} value={user?.shippingAddress?.state} type="text" className="left-profile-name-input" />
+                    <input onChange={stateChangeHalder}  type="text" value={state}className="left-profile-name-input" />
                   </div>
                   <div className="input-div-profile-page">
                     <label className="left-profile-name-label">Country</label>
-                    <input onChange={countryChangeHalder} value={user?.shippingAddress?.country} type="text" className="left-profile-name-input" />
+                    <input onChange={countryChangeHalder} value={country} type="text" className="left-profile-name-input" />
                   </div>
                   <div className="input-div-profile-page">
                     <label className="left-profile-name-label">Phone Number</label>
-                    <input onChange={phoneNumberChangeHalder} value={user?.shippingAddress?.phone} type="tel" className="left-profile-name-input" />
+                    <input onChange={phoneNumberChangeHalder} value={phoneNumber} type="tel" className="left-profile-name-input" />
                   </div>
 
                 </div>

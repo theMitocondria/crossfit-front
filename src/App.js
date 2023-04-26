@@ -38,8 +38,10 @@ import { useSelector } from "react-redux";
 
 function App() {
 
-  // const isLoggedIn = useSelector((state) => state.users.userAuth.userInfo.token);
-  // console.log(isLoggedIn);
+ 
+       
+  const userInfo = useSelector((state) => state.users?.userAuth?.userInfo);
+  const isLoggedIn = userInfo ? true: false;
   return (
     <BrowserRouter>
       <Routes>
@@ -50,7 +52,20 @@ function App() {
         <Route
           path="/"
           element={
-           <>
+           !isLoggedIn ? <BeforeLoginLandingPage /> :    <>
+           <Navbar />
+           <LandingPage />
+           <WhyCrossFit />
+           <Swiper data={data} />
+           <Wearecrossfit />
+           <GetInTouch />
+           <Footer />
+         </>
+          }
+        />
+
+        <Route path="/signin" element={
+          isLoggedIn ? (  <>
             <Navbar />
             <LandingPage />
             <WhyCrossFit />
@@ -58,16 +73,28 @@ function App() {
             <Wearecrossfit />
             <GetInTouch />
             <Footer />
-          </>
-          }
-        />
-
-        <Route path="/signin" element={
-          <SignIn />
-        
+          </>) : <SignIn />
         } />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/otp" element={<Otp />} />
+
+        <Route path="/signup" element={ isLoggedIn ? (  <>
+            <Navbar />
+            <LandingPage />
+            <WhyCrossFit />
+            <Swiper data={data} />
+            <Wearecrossfit />
+            <GetInTouch />
+            <Footer />
+          </>) :<SignUp />} />
+
+        <Route path="/otp" element={ isLoggedIn ? (  <>
+            <Navbar />
+            <LandingPage />
+            <WhyCrossFit />
+            <Swiper data={data} />
+            <Wearecrossfit />
+            <GetInTouch />
+            <Footer />
+          </>) : <Otp />} />
         <Route path='/forget/password' element ={<ForgetPassword />} />
         <Route path='/reset/password/:id' element ={<ResetPassword />} />
 
@@ -181,11 +208,13 @@ function App() {
 
         
 
-        <Route path="/profile" element={<>
-        <Navbar/>
-        <Profile/>
-        <Footer/>
-        </>} />
+        <Route path="/profile" element={
+          !isLoggedIn?<BeforeLoginLandingPage /> :<>
+          <Navbar/>
+          <Profile/>
+          <Footer/>
+          </>
+        } />
 
         <Route path="*" element={<PageNotFound />} /> 
 

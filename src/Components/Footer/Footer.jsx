@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <div className='footer-full-class'>
         <div className='footer-first-section'>
-           <HashLink to='/#home'> <img className='first-section-img' src='https://res.cloudinary.com/dycitvrpg/image/upload/v1681547684/blacklogo_f7ufat.png' alt="logo" /></HashLink>
+           <Link to='/'> <img className='first-section-img' src='https://res.cloudinary.com/dycitvrpg/image/upload/v1681547684/blacklogo_f7ufat.png' alt="logo" /></Link>
             <p className='first-section-para'>Transform your Body!</p>
         </div>
         <div className='footer-second-section'>
