@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import "./Review.css";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createTestimonialsReview } from '../../redux/slices/testimonialSlices';
+import LoadingComponent from '../LoadingComponent/Loading';
 
 const Review = () => {
     const [heading,setHeading]=useState();
     const [Description,setDescription]=useState();
     const dispatch=useDispatch();
+    const {loading,error}=useSelector((state)=>state.testimonial);
 
     
     const onChangeHeading=(e)=>{
@@ -24,6 +26,8 @@ const Review = () => {
         console.log("testimonials is working");
         console.log(heading,Description);
         dispatch(createTestimonialsReview({heading,Description}));
+        setHeading("");
+        setDescription("");
     }
     return (
 
@@ -39,7 +43,9 @@ const Review = () => {
                             <hr/>
                             <textarea className='Review-main-form-imput-textarea' type='text' value={Description} placeholder='Write your review in about 50 words' onChange={onChangeDescription}/>
                             <div className='Review-main-form-imput-button-div'>
-                            <button className="Review-main-form-imput-button" onClick={onSubmitTestimmonials}>Submit</button>
+                            {
+                                loading?<LoadingComponent/>:<button className="Review-main-form-imput-button" onClick={onSubmitTestimmonials}>Submit</button>
+                            }
                             </div>
                         </form>
                     </div>

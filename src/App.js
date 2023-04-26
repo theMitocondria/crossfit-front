@@ -69,7 +69,7 @@ function App() {
             <Navbar />
             <LandingPage />
             <WhyCrossFit />
-            <Swiper data={data} />
+            <Swiper/>
             <Wearecrossfit />
             <GetInTouch />
             <Footer />

@@ -1,7 +1,5 @@
 import React from 'react'
 import './LandingPage.css'
-import logo from '../../images/logo1.png'
-import trainer from '../../images/trainer.png'
 import { Link } from 'react-router-dom'
 
 

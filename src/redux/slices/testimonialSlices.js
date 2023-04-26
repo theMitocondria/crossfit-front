@@ -23,9 +23,7 @@ export const allTestimonialsAction=createAsyncThunk('/all/testimonial',async({me
         //saving the user into localStorage
         // localStorage.setItem('userInfo', JSON.stringify(data));
         return data;
-    } catch (error) {        
-
-        
+    } catch (error) {
         console.log(error);
         return rejectWithValue(error);
     }

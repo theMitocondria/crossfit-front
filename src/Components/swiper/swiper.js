@@ -10,15 +10,39 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { allTestimonialsAction } from "../../redux/slices/testimonialSlices";
-const SwiperComponent = ({ data }) => {
+import { useState } from "react";
+const SwiperComponent = () => {
+  const [data1,setData]=useState([]);
   const dispatch=useDispatch();
   useEffect(()=>{
     const mess="hi";
     dispatch(allTestimonialsAction(mess));
-  },[dispatch]);
+  },[]);
 
-  let {test}=useSelector((state)=>state.testimonial?.testimonials);
-  console.log(test);
+  // let test = useSelector((state)=>state.testimonial?.testimonials?.test);
+  const test1 = useSelector((state) => state.testimonial?.testimonials.test)
+  // console.log(test1);
+  // const {test: test2} = test1
+  // console.log(test2);
+  // let dataf = [];
+  // for(let i in test2){
+  //   console.log(i);
+  //   // dataf.push(test2[i].captionHeading)
+  //   dataf.push({captionDescription: test2[i].captionDescription,
+  //               captionHeading: test2[i].captionHeading,
+  //               image_link: test2[i].user.avatar,
+  //             user: test2[i].user.name})
+
+  // }
+  // console.log(dataf);
+  // let dataArray=[];
+  // console.log(typeof(dataArray));
+  // for(let i in test){
+  //   dataArray.push(test[i])
+  // }
+  // console.log(test);
+  // console.log(dataArray);
+  // console.log(typeof(dataArray));
   return (
     <div className="app1">
       <div className="upper">
@@ -47,17 +71,17 @@ const SwiperComponent = ({ data }) => {
         onSwiper={(swiper) => console.log(swiper)}
   
       >
-        {data.map((item) => (
+        {test1?.map((item) => (
           <SwiperSlide className="card">
-            <p>{item.description}</p>
+            <p>{item.captionDescription}</p>
             <div className="line"></div>
             <div className="lower">
               <div>
-                <img src={item.image_link} alt="wrong" />
+                <img src={item.user.avatar} alt="wrong" />
               </div>
               <div>
-                <p className="heading">{item.heading}</p>
-                <p className="user-giving-review-name">{item.user}</p>
+                <p className="heading">{item.captionHeading}</p>
+                <p className="user-giving-review-name">{item.user.name}</p>
               </div>
             </div>
           </SwiperSlide>
