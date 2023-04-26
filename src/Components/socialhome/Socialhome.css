@@ -113,3 +113,48 @@
     margin-left: 18vmax;
 }
 
+
+
+.mobile-navbar-div{
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-mobile-crossfit-button, .navbar-mobile-hamburger-button{
+    background-color: transparent;
+    outline: none;
+    border: none;
+    margin: 1vh;
+}
+.navbar-mobile-crossfit-button{
+    margin-left: 3vh;
+}
+.cross-mobile-para{
+    font-weight: bolder;
+    color: black;
+    font-size: 2rem;
+}
+
+.fit-mobile-para{
+    font-weight: bolder;
+    color: #9d8cff;
+    font-size: 2rem;
+}
+
+.navbar-mobile-hamburger-button{
+    font-size: 2rem;
+    margin-right: 3vh;
+    margin-top: 2vh;
+}
+
+.active-mobile-user-info{
+   
+}
+
+.unactive-mobile-user-info{
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    
+}

@@ -34,3 +34,13 @@
 .caption-post{
     margin-top: 0px;
 }
+
+@media screen and (max-width:600px) {
+    .post-social{
+        width: 90vw;
+        background-color: white;
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+    
+}

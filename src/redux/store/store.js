@@ -5,6 +5,7 @@ import gymPlanReducer from "../slices/gymPlanSlice";
 import chatReducer from "../slices/fitbotSlice";
 import feedbackReducer from "../slices/feedbackSlice";
 import testimonialReducer from "../slices/testimonialSlices";
+import SocialReducer from "../slices/socialSlice";
 
 const store = configureStore({
     reducer:{
@@ -14,6 +15,7 @@ const store = configureStore({
         fitbotChat: chatReducer,
         feedback: feedbackReducer,
         testimonial:testimonialReducer,
+        social:SocialReducer,
     }
 })
 
