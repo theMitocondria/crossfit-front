@@ -11,9 +11,34 @@ const initialState = {
         loading:false,
         post:null,
     },
+    myPosts:{
+        error: null,
+        loading: false,
+        myPosts: [],
+    }
 }
 
 export const AllPostsReducers=createAsyncThunk("/all/posts",async({my},{getState,rejectWithValue})=>{
+    try {
+       
+        const token=getState().users?.userAuth?.userInfo?.user?.token;
+    
+        const config={
+           headers:{
+             token:`${token}`
+           }
+        }
+
+        const {data}=await axios.get(`${baseURL}/post/all`,config);
+        return data;
+    } catch (error) {
+       
+        return rejectWithValue(error?.message);
+    }
+})
+
+
+export const MyPostsReducers=createAsyncThunk("/my/posts",async({my},{getState,rejectWithValue})=>{
     try {
         console.log(my);
         const token=getState().users?.userAuth?.userInfo?.user?.token;
@@ -24,11 +49,11 @@ export const AllPostsReducers=createAsyncThunk("/all/posts",async({my},{getState
            }
         }
 
-        const {data}=await axios.get(`${baseURL}/post/all`,config);
+        const {data}=await axios.get(`${baseURL}/post/my`,config);
         return data;
     } catch (error) {
         console.log(error);
-        return rejectWithValue(error?.message);
+        return rejectWithValue(error?.response?.data);
     }
 })
 
@@ -46,6 +71,20 @@ const SocialSlice = createSlice({
     builder.addCase(AllPostsReducers.rejected,(state,action)=>{
         state.loading=false;
         state.error=action.payload
+    })
+
+
+
+    builder.addCase(MyPostsReducers.pending,(state)=>{
+        state.loading=true;
+    })
+    builder.addCase(MyPostsReducers.fulfilled,(state,action)=>{
+        state.loading=false;
+        state.myPosts=action.payload;
+    })
+    builder.addCase(MyPostsReducers.rejected,(state,action)=>{
+        state.loading=false;
+        state.myPosts.error=action.payload
     })
     }
 });
