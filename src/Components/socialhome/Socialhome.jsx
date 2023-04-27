@@ -39,6 +39,10 @@ const Socialhome = () => {
         setshowmypost(false)
         navigate('/community')
     }
+    
+    const editprofileclickbtn = () => {
+        navigate('/profile')
+    }
 
     const mypostclickbtn = () => {
         setshowmypost(true)
@@ -86,7 +90,7 @@ const Socialhome = () => {
                                 <button onClick={mypostclickbtn} className='socialhome-left-BUTTON'>MY POSTS</button>
                                 <button onClick={allpostclickbtn} className='socialhome-left-BUTTON'>ALL POSTS</button>
                                 <button onClick={newpostbuttonClicked} className='socialhome-left-BUTTON'>NEW POST</button>
-                                <button className='socialhome-left-BUTTON'>EDIT PROFILE</button>
+                                <button className='socialhome-left-BUTTON' onClick={editprofileclickbtn}>EDIT PROFILE</button>
 
                             </div>
                         </div>
@@ -115,7 +119,7 @@ const Socialhome = () => {
                                 <button onClick={mypostclickbtn} className='socialhome-left-BUTTON'>MY POSTS</button>
                                 <button onClick={allpostclickbtn} className='socialhome-left-BUTTON'>ALL POSTS</button>
                                 <button onClick={newpostbuttonClicked} className='socialhome-left-BUTTON'>NEW POST</button>
-                                <button className='socialhome-left-BUTTON'>EDIT PROFILE</button>
+                                <button className='socialhome-left-BUTTON' onClick={editprofileclickbtn}>EDIT PROFILE</button>
 
                             </div>
                         </div>

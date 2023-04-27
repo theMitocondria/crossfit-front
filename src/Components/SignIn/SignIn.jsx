@@ -4,7 +4,7 @@ import { Link,useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInAction } from '../../redux/slices/userSlice'
-import LoadingComponent from '../LoadingComponent/Loading'
+import WhiteLoadingComponent from "../LoadingComponent/whiteLoading";
 
 const SignIn = () => {
   
@@ -69,7 +69,7 @@ const SignIn = () => {
 
                    <div className='sign-up-page-submit-btn-div'>
                     {
-                      loading ? <LoadingComponent /> : <button onClick={onSubmitHanlder} className='sign-up-button'>Submit</button>
+                      loading ? <WhiteLoadingComponent /> : <button onClick={onSubmitHanlder} className='sign-up-button'>Submit</button>
                     }
                    </div>
                 </div>
