@@ -6,7 +6,7 @@ const data=[
  
     {
         "name":"Beans",
-        "image":"https://res.cloudinary.com/dejvlvhlp/image/upload/v1681643337/bean_cfcto9.png"
+        "image":"https://res.cloudinary.com/dejvlvhlp/image/upload/v1682611722/red-beans_uckipl.png"
     },
     {
         "name":"Biryani(Non-Veg)",
@@ -38,7 +38,7 @@ const data=[
     },
     {
         "name":"Idli",
-        "image":"https://res.cloudinary.com/dejvlvhlp/image/upload/v1681643487/idli_xy6t70.png"
+        "image":"https://res.cloudinary.com/dejvlvhlp/image/upload/v1682611722/mochi_jutdln.png"
     },
     {
         "name":"Tuna",
@@ -103,11 +103,11 @@ const data=[
     },
     {
         "name":"Tomato",
-        "image":"https://res.cloudinary.com/dejvlvhlp/image/upload/v1681643489/white-bread_ktq9it.png"
+        "image":"https://res.cloudinary.com/dejvlvhlp/image/upload/v1682611722/tomato_x8whec.png"
     },
     {
         "name":"Salmon",
-        "image":"https://res.cloudinary.com/dejvlvhlp/image/upload/v1681643487/salmon_p8vlcw.png"
+        "image":"https://res.cloudinary.com/dejvlvhlp/image/upload/v1682611722/fish_cigylx.png"
     },
     {
         "name":"Sweet Potato",

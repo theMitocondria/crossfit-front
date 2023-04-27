@@ -4,6 +4,7 @@ import { Link,useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUserAction } from '../../redux/slices/userSlice'
+import ErrorMsg from '../Alert/ErrorAlert'
 import WhiteLoadingComponent from "../LoadingComponent/whiteLoading";
 
 const SignUp = () => {
@@ -15,9 +16,9 @@ const SignUp = () => {
   const {loading, error} = useSelector((state) => state.users);
 
 
-  const [name, setName] = useState("gautam")
-  const [email, setEmail] = useState("dhruvmehta382@gmail.com")
-  const [password, setPassword] = useState("gautam")
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
 
   const nameChangeHandler = (e) => {
@@ -60,7 +61,9 @@ const onSubmitHanlder = async(e) => {
         <img className='sign-up-page-img' src="https://res.cloudinary.com/dycitvrpg/image/upload/v1681382796/logo_xx6npu.png" alt="" />
 
         <div className='sign-up-main' >
-            
+        {
+                      error ? <ErrorMsg message={error.message} />:<></>
+                    }
             <div className='sign-up-main-left'>
                 <p className='sign-up-left-welcome'>Stay Consistent!</p>
                 <p className='sign-up-left-para'>Healthier, Happier, Bettter: Our app does it all...</p>

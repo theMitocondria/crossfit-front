@@ -1,11 +1,13 @@
 import axios from "axios";
 import baseURL from "../../utils/baseURL";
-import { createAsyncThunk, createSlice, isAsyncThunkAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { resetErrAction, resetSuccessAction } from "../globalActions/globalAction";
 
 const initialState = {
     // ye wali loading or error jab use hoge jab user register krega 
     loading: false,
     error: null,
+    success:false,
     inTempStorage: false,
     userLessAuth: {
         // ye wale loading or error jab user login kregea
@@ -127,20 +129,12 @@ export const resetPasswordAction = createAsyncThunk('reset/password', async ({ r
 export const logoutAction = createAsyncThunk(`/logout/profile`, async ({check},{getState,rejectWithValue}) => {
     try {
         const token = getState()?.users?.userAuth?.userInfo?.user?.token;
-        
-        console.log(check,token);
-        const config = {
-            headers: {
-                token: `${token}`
-            }
-        }
         localStorage.removeItem('userInfo');
         
-        const { data } = "user logout successfull";
+        const data = "user logout successfull";
         return data;
     } catch (error) {
         return rejectWithValue(error?.response?.data);
-
     }
 
 })
@@ -348,9 +342,11 @@ const userSlice = createSlice({
         });
         builder.addCase(forgetPasswordAction.fulfilled, (state) => {
             state.loading = false;
+            state.success=true;
         });
         builder.addCase(forgetPasswordAction.rejected, (state, action) => {
             state.error = action.payload;
+            state.loading = false;
         });
 
         builder.addCase(resetPasswordAction.pending, (state) => {
@@ -358,9 +354,11 @@ const userSlice = createSlice({
         });
         builder.addCase(resetPasswordAction.fulfilled, (state) => {
             state.loading = false;
+            state.success = true;
         });
         builder.addCase(resetPasswordAction.rejected, (state, action) => {
             state.error = action.payload;
+            state.loading = false;
         });
 
 
@@ -425,12 +423,14 @@ const userSlice = createSlice({
         builder.addCase(singleUserAction.rejected, (state, action) => {
             state.findUser.loading=false;
             state.findUser.error = action.payload;
+            state.error = action.payload;
         });
 
-
-        builder.addCase(singleUserAction.rejected, (state, action) => {
-            state.findUser.loading=false;
-            state.findUser.error = action.payload;
+        builder.addCase(resetErrAction.pending, (state, action) => {
+            state.error = action.payload;
+        });
+        builder.addCase(resetSuccessAction.pending, (state, action) => {
+            state.success = false;
         });
 
 

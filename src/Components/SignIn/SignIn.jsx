@@ -15,8 +15,8 @@ const SignIn = () => {
   
 
 
-  const [email, setEmail] = useState("buddhgautam777@gmail.com")
-  const [password, setPassword] = useState("gautam")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
   const emailChangeHandler = (e) => {
     setEmail(e.target.value)
@@ -65,17 +65,17 @@ const SignIn = () => {
             <div className='sign-up-main-right' >
                 <p className='sign-up-right-signin'>Sign in</p>
                 
-                <div className='sign-up-right-input-parent-div'>
+                <form className='sign-up-right-input-parent-div'>
 
                       
 
                         <p className='sign-up-page-input-fields-desc'>Email</p>
-                        <input onChange={emailChangeHandler} className='sign-up-page-input-fields' type="text" />
+                        <input onChange={emailChangeHandler} required className='sign-up-page-input-fields' type="email" />
                   
 
                     
                         <p className='sign-up-page-input-fields-desc'>Password</p>
-                        <input onChange={passwordChangeHandler} className='sign-up-page-input-fields' type="text" />
+                        <input onChange={passwordChangeHandler} required className='sign-up-page-input-fields' type="text" />
                    
 
                    <div className='sign-up-page-submit-btn-div'>
@@ -84,7 +84,7 @@ const SignIn = () => {
                     }
                    
                    </div>
-                </div>
+                </form>
 
                <div  className='sign-in-page-link-div'>
                 <Link className='sign-up-page-link' to='/forget/password'>Forgot password?</Link>

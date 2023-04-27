@@ -3,10 +3,12 @@ import { useState} from "react";
 import { Link, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPasswordAction } from '../../redux/slices/userSlice';
+import ErrorMsg from '../Alert/ErrorAlert'
+import SuccessMsg from '../Alert/SuccessAlert';
 import WhiteLoadingComponent from "../LoadingComponent/whiteLoading";
 const ResetPassword = () => {
   const [resetPassword,setResetPassword]=useState();
-  const {loading , error} = useSelector(state => state.users)
+  const {loading , error, success} = useSelector(state => state.users)
   const dispatch=useDispatch();
   const params=useParams();
   const onChangePassword=(e)=>{
@@ -17,6 +19,13 @@ const OnSubmitPassword=()=>{
 }
   return (
     <div className="otp-main-div">
+        {
+                      error ? <ErrorMsg message={error.message} />:<></>
+          }
+
+          {
+            success ? <SuccessMsg title="Password Updated." message="Please login again with your new password." /> : <> </>
+          }
       <div className="otp-head-div">
         <img
           className="sign-up-page-img"

@@ -4,7 +4,7 @@ import { Link,useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { verifyUserOTPAction } from '../../redux/slices/userSlice'
 import WhiteLoadingComponent from "../LoadingComponent/whiteLoading";
-
+import ErrorMsg from '../Alert/ErrorAlert'
 
 const Otp = () => {
 
@@ -34,6 +34,9 @@ const Otp = () => {
 
   return (
     <div className="otp-main-div">
+          {
+                      error ? <ErrorMsg message={error.message} />:<></>
+                    }
       <div className="otp-head-div">
         <img
           className="sign-up-page-img"

@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { forgetPasswordAction } from '../../redux/slices/userSlice';
 import WhiteLoadingComponent from "../LoadingComponent/whiteLoading";
+import ErrorMsg from '../Alert/ErrorAlert'
+import SuccessMsg from '../Alert/SuccessAlert';
 const ForgetPassword = () => {
   const [email,setEmail]=useState();
   const dispatch=useDispatch();
-  const {loading}=useSelector(state=>state.users);
+  const {loading, error, success}=useSelector(state=>state.users);
   const onChangeEmail=(e)=>{
     setEmail(e.target.value);
   }
@@ -13,9 +15,17 @@ const ForgetPassword = () => {
   const onSubmitForm=()=>{
     dispatch(forgetPasswordAction({email}))
     console.log(email);
+    setEmail("");
   }
   return (
     <div className="otp-main-div">
+          {
+                      error ? <ErrorMsg message={error.message} />:<></>
+          }
+
+          {
+            success ? <SuccessMsg title="Email Sent." message="Reset Password link sent to your email." /> : <> </>
+          }
       <div className="otp-head-div">
         <img
           className="sign-up-page-img"
@@ -33,7 +43,7 @@ const ForgetPassword = () => {
 
           <div className='sign-up-right-input-parent-div'>
             <p className='sign-up-page-input-fields-desc'>Email Address</p>
-            <input onChange={onChangeEmail} required className='sign-up-page-input-fields' type="email" />
+            <input onChange={onChangeEmail} value={email} required className='sign-up-page-input-fields' type="email" />
             <div className='sign-up-page-submit-btn-div'>
               {
                 loading?<WhiteLoadingComponent/>:<button className='sign-up-button' onClick={onSubmitForm}>Send Mail</button>
