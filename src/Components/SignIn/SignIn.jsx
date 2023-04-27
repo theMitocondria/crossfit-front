@@ -4,7 +4,7 @@ import { Link,useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInAction } from '../../redux/slices/userSlice'
-import WhiteLoadingComponent from '../LoadingComponent/whiteLoading'
+import WhiteLoadingComponent from "../LoadingComponent/whiteLoading";
 
 const SignIn = () => {
   

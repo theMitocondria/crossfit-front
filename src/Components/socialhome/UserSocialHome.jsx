@@ -16,7 +16,7 @@ const UserSocialhome = () => {
     const [showmypost, setshowmypost] = useState(false);
     const [clicked, setClicked] = useState(false);
     const phone = window.innerWidth < 600 ? true : false;
-
+    
 
     useEffect(()=>{
         const my="post function called";

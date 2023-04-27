@@ -4,7 +4,7 @@ import "../DietPlan/dietplan.css"
 import GymplanNavbar from "./gymplanNavbar";
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import WhiteLoadingComponent from '../LoadingComponent/whiteLoading';
+import WhiteLoadingComponent from "../LoadingComponent/whiteLoading";
 import { saveAs } from 'file-saver';
 import { gymPlanAction } from '../../redux/slices/gymPlanSlice';
 
