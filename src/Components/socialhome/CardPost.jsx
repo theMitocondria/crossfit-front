@@ -1,13 +1,29 @@
 import React from 'react'
 import "./cardpost.css"
-import {AiOutlineHeart} from "react-icons/ai"
-import {MdOutlineModeComment} from "react-icons/md"
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { singleUserAction } from '../../redux/slices/userSlice';
+// import {AiOutlineHeart} from "react-icons/ai"
+// import {MdOutlineModeComment} from "react-icons/md"
 const CardPost = (props) => {
-  console.log(props.name, props.caption, props.postImageUrl, props.userAvatarUrl)
+  console.log(props);
+  const dispatch = useDispatch()
+  const navigate=useNavigate();
+  
+  const {findUser} = useSelector((state) => state.users)
+  console.log(findUser)
+
+
+  const getsingleUser = () => {
+       dispatch(singleUserAction({id:props.id}))
+      
+          navigate('/community/user')
+      
+  }
   return (
-    <div className='post-social'>
+    <div onClick={getsingleUser} className='post-social'>
         <img className='post-social-image' src={props.postImageUrl}  alt="image-post"/>
-        <div className='post-bottom'>
+        <div  className='post-bottom'>
             <div className='post-bottom-left'>
             <img className='social-post-user-avatar' src={props.userAvatarUrl} alt="user-avavtar"/>
             </div>
@@ -17,8 +33,8 @@ const CardPost = (props) => {
                 <p className='caption-post'>{props.captiondesc}</p>
             </div>
             <div className='post-bottom-right'>
-                <AiOutlineHeart style={{color:"red",fontSize:"4vh",marginRight:"1.5vw"}}/>
-                <MdOutlineModeComment style={{fontSize:"4vh"}}/>
+                {/* <AiOutlineHeart style={{color:"red",fontSize:"4vh",marginRight:"1.5vw"}}/>
+                <MdOutlineModeComment style={{fontSize:"4vh"}}/> */}
             </div>
         </div>
     </div>

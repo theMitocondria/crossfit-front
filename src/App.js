@@ -34,6 +34,7 @@ import Otp from "./Components/Otp/Otp"
 import ForgetPassword from "./Components/ForgetPassword/ForgetPassword";
 import ResetPassword from "./Components/ForgetPassword/ResetPassword";
 import { useSelector } from "react-redux";
+import UserSocialhome from "./Components/socialhome/UserSocialHome";
 
 
 function App() {
@@ -213,6 +214,12 @@ function App() {
           <Navbar/>
           <Profile/>
           <Footer/>
+          </>
+        } />
+
+        <Route path ='/community/user' element ={
+          <>
+            <UserSocialhome/>
           </>
         } />
 

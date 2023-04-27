@@ -57,6 +57,28 @@ export const MyPostsReducers=createAsyncThunk("/my/posts",async({my},{getState,r
     }
 })
 
+export const createPostAction=createAsyncThunk("/create/post",async({captionHeading,captionDescription,file},{rejectWithValue,getState})=>{
+    try {
+        const token=getState().users?.userAuth?.userInfo?.user?.token;
+        const config={
+           headers:{
+             token:`${token}`
+           }
+        }
+
+        const formdata=new FormData();
+
+        formdata.append("captionHeading",captionHeading);
+        
+        formdata.append("captionDescription",captionDescription);
+        formdata.append("file",file[0]);
+        const {data}=await axios.post(`${baseURL}/post/create`,formdata,config);
+        console.log(data);
+        return data;
+    } catch (error) {
+        rejectWithValue(error?.response?.data);
+    }
+})
 const SocialSlice = createSlice({
     name: "Social",
     initialState,
@@ -85,6 +107,18 @@ const SocialSlice = createSlice({
     builder.addCase(MyPostsReducers.rejected,(state,action)=>{
         state.loading=false;
         state.myPosts.error=action.payload
+    })
+
+    builder.addCase(createPostAction.pending,(state)=>{
+        state.post.loading=true;
+    })
+    builder.addCase(createPostAction.fulfilled,(state,action)=>{
+        state.post.loading=false;
+        state.post=action.payload;
+    })
+    builder.addCase(createPostAction.rejected,(state,action)=>{
+        state.post.loading=false;
+        state.post.error=action.payload;
     })
     }
 });

@@ -1,20 +1,33 @@
 import React from 'react'
 import "./Socialhome.css"
-import { useEffect } from 'react'
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { createPostAction } from '../../redux/slices/socialSlice';
+import LoadingComponent from '../LoadingComponent/Loading';
+
+
+
 const NewPost = () => {
+    const dispatch = useDispatch();
+
+    const { loading, error } = useSelector(state => state?.social?.post)
 
     const navigate = useNavigate();
     const [clicked, setClicked] = useState(false);
+    const [postImage, setPostImage] = useState();
+    const [captionHeading, setCaptionHeading] = useState("");
+    const [captionDescription, setCaptionDescription] = useState("");
+
+    const postUpload = (event) => {
+        console.log(event.target.files);
+        setPostImage(event.target.files);
+    }
     const phone = window.innerWidth < 600 ? true : false;
     const buttonClicked = () => {
         console.log("mobile button clicked");
         setClicked(!clicked)
-    }
-    const newpostbuttonClicked = () => {
-        navigate('/newpost')
     }
     const allpostclickbtn = () => {
         navigate('/community')
@@ -23,6 +36,28 @@ const NewPost = () => {
     const editprofileclickbtn = () => {
         navigate('/profile')
     }
+
+    const onHeadingChange = (e) => {
+        setCaptionHeading(e.target.value);
+    }
+    const onDescriptionChange = (e) => {
+        setCaptionDescription(e.target.value);
+    }
+    const onSubmitPostNew = (e) => {
+        e.preventDefault();
+
+
+        dispatch(createPostAction({ captionHeading, captionDescription, file: postImage }))
+        setPostImage("");
+        setCaptionDescription("");
+        setCaptionHeading("")
+        console.log(postImage);
+        console.log("submit clicked");
+    }
+    const movetolandingpage = () =>{
+        navigate('/')
+    }
+
     console.log(phone)
     return (
         <div>
@@ -30,7 +65,7 @@ const NewPost = () => {
             {
                 phone ? <div className='mobile-parent-div'>
                     <div className='mobile-navbar-div'>
-                        <button className="navbar-mobile-crossfit-button"><p className='cross-mobile-para'>cross<span className='fit-mobile-para'>fit</span></p></button>
+                        <button className="navbar-mobile-crossfit-button" onClick={movetolandingpage}><p className='cross-mobile-para'>cross<span className='fit-mobile-para'>fit</span></p></button>
                         <button className="navbar-mobile-hamburger-button" onClick={buttonClicked}><GiHamburgerMenu /></button>
 
                     </div>
@@ -51,21 +86,31 @@ const NewPost = () => {
 
                     <div className='new-center-div'>
                         <div className='new-post-form-div'>
-                            <form className='newPostForm' >
+                            <form onSubmit={onSubmitPostNew} className='newPostForm' >
                                 <h2 className='newpost-heading'>Express Yourself: Create a New Post on Our Social Media App Today!</h2>
                                 <p className='newpost-para'>Ready to share your thoughts, feelings, and experiences with the world? Our social media app is the perfect platform for you to create a new post and let your voice be heard. So what are you waiting for? Create a new post today and start building your online community!</p>
                                 <input
                                     type="file"
                                     accept="image/*"
                                     placeholder='upload'
+                                    
+                                    onChange={postUpload}
                                 />
                                 <input
                                     type="text"
-                                    placeholder='Caption ..'
+                                    placeholder='Caption Heading ..'
+                                    onChange={onHeadingChange}
+                                    value={captionHeading}
                                 />
-                                <button type="submit" className='btn-socialhome'>
+                                <input
+                                    type="text"
+                                    placeholder='Description ..'
+                                    value={captionDescription}
+                                    onChange={onDescriptionChange}
+                                />
+                                {loading ? <LoadingComponent /> : <button className='btn-socialhome' >
                                     Post
-                                </button>
+                                </button>}
                             </form>
                         </div>
                     </div>
@@ -75,7 +120,7 @@ const NewPost = () => {
                     (
                         <div className='socialhome-main-div'>
                             <div className='socialhome-left-div'>
-                                <div className='socialhome-left-heading-div'>
+                                <div className='socialhome-left-heading-div' onClick={movetolandingpage}>
                                     <p className='socialhome-left-heading-para-cross'>cross<span className='socialhome-left-heading-para-fit'>fit</span></p>
                                 </div>
                                 <div className='socialhome-left-profile-div'>
@@ -92,21 +137,33 @@ const NewPost = () => {
                             </div>
                             <div className='new-center-div'>
                                 <div className='new-post-form-div'>
-                                    <form className='newPostForm' >
+                                    <form onSubmit={onSubmitPostNew} className='newPostForm' >
                                         <h2 className='newpost-heading'>Express Yourself: Create a New Post on Our Social Media App Today!</h2>
                                         <p className='newpost-para'>Ready to share your thoughts, feelings, and experiences with the world? Our social media app is the perfect platform for you to create a new post and let your voice be heard. So what are you waiting for? Create a new post today and start building your online community!</p>
                                         <input
-                                            type="file"
-                                            accept="image/*"
-                                            placeholder='upload'
-                                        />
-                                        <input
-                                            type="text"
-                                            placeholder='Caption ..'
-                                        />
-                                        <button type="submit" className='btn-socialhome'>
+                                    type="file"
+                                    accept="image/*"
+                                    placeholder='upload'
+                                   
+                                    onChange={postUpload}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder='Caption Heading ..'
+                                    onChange={onHeadingChange}
+                                    value={captionHeading}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder='Description ..'
+                                    value={captionDescription}
+                                    onChange={onDescriptionChange}
+                                />
+
+                                        {loading ? <LoadingComponent /> : <button className='btn-socialhome' >
                                             Post
-                                        </button>
+                                        </button>}
+
                                     </form>
                                 </div>
                             </div>

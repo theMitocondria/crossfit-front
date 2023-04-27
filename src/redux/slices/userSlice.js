@@ -17,6 +17,11 @@ const initialState = {
         loading: false,
         error: null,
         userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,
+    },
+    allusers:[],
+    findUser:{
+        error:null,
+        loading:false,
     }
 }
 
@@ -140,7 +145,35 @@ export const logoutAction = createAsyncThunk(`/logout/profile`, async ({check},{
 
 })
 
+export const uploadAvatarAction=createAsyncThunk('user/upload',async(
+    {file},
+    { rejectWithValue, getState, dispatch }
+)=>{
+    try {
+        console.log(file);
+        const token = getState()?.users?.userAuth?.userInfo?.user?.token;
+        console.log(file[0])
+        console.log(token);
+        const config = {
+            headers: {
+                token: `${token}`
+            }
+        }
 
+       const formdata=new FormData();
+       formdata.append("file",file[0]);
+       console.log(formdata);
+       
+
+
+        const {data}= await axios.post(`${baseURL}/users/avatar`, formdata,config );
+        localStorage.setItem('userInfo', JSON.stringify(data));
+        return data;
+        
+    } catch (error) {
+        return rejectWithValue(error?.response?.data)
+    }
+})
 
 export const userShippingAdressAction = createAsyncThunk('user/shippingAdress', async (
     { shippingName:name, city, pincode, state, country, phoneNumber },
@@ -183,6 +216,83 @@ export const userShippingAdressAction = createAsyncThunk('user/shippingAdress', 
         return rejectWithValue(error?.response?.data);
     }
 })
+
+
+
+
+export const allUserAction = createAsyncThunk('user/all', async (
+    {},
+    { rejectWithValue, getState, dispatch }
+) => {
+    try {
+
+        console.log("hi in action shipping ")
+
+        const token = getState()?.users?.userAuth?.userInfo?.user?.token;
+        console.log(getState());
+        console.log(token);
+        
+        const config = {
+            headers: {
+                token: `${token}`
+            }
+        }
+        
+     
+        const { data } = await axios.get(`${baseURL}/users/all`,  config);
+        
+
+
+        console.log(data);
+
+        //saving the user into localStorage
+        // localStorage.setItem('userInfo', JSON.stringify(data));
+        return data;
+    } catch (error) {
+        console.log(error?.response?.data)
+        return rejectWithValue(error?.response?.data);
+    }
+})
+
+
+
+
+
+export const singleUserAction = createAsyncThunk('user/single', async (
+    {id},
+    { rejectWithValue, getState, dispatch }
+) => {
+    try {
+
+        
+
+        const token = getState()?.users?.userAuth?.userInfo?.user?.token;
+        console.log(getState());
+        console.log(token);
+        
+        const config = {
+            headers: {
+                token: `${token}`
+            }
+        }
+        
+     
+        const { data } = await axios.post(`${baseURL}/users/singleuser`,{id},config);
+        
+
+
+        console.log(data);
+
+        //saving the user into localStorage
+        // localStorage.setItem('userInfo', JSON.stringify(data));
+        return data;
+    } catch (error) {
+        console.log(error?.response?.data)
+        return rejectWithValue(error?.response?.data);
+    }
+})
+
+
 
 
 
@@ -277,6 +387,44 @@ const userSlice = createSlice({
         });
         builder.addCase(userShippingAdressAction.rejected, (state, action) => {
             state.error = action.payload;
+        });
+
+        builder.addCase(uploadAvatarAction.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(uploadAvatarAction.fulfilled, (state,action) => {
+            state.loading = false;
+            state.userAuth.userInfo=action.payload;
+        });
+        builder.addCase(uploadAvatarAction.rejected, (state, action) => {
+            state.loading=false;
+            state.error = action.payload;
+        });
+
+
+
+        builder.addCase(allUserAction.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(allUserAction.fulfilled, (state,action) => {
+            state.loading = false;
+            state.allusers=action.payload;
+        });
+        builder.addCase(allUserAction.rejected, (state, action) => {
+            state.loading=false;
+            state.error = action.payload;
+        });
+
+        builder.addCase(singleUserAction.pending, (state) => {
+            state.findUser.loading = true;
+        });
+        builder.addCase(singleUserAction.fulfilled, (state,action) => {
+            state.findUser.loading = false;
+            state.findUser=action.payload;
+        });
+        builder.addCase(singleUserAction.rejected, (state, action) => {
+            state.findUser.loading=false;
+            state.findUser.error = action.payload;
         });
 
 

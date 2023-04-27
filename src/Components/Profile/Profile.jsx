@@ -1,11 +1,14 @@
 import React from "react";
 import "./Profile.css";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutAction, userShippingAdressAction } from "../../redux/slices/userSlice";
+import { logoutAction, uploadAvatarAction, userShippingAdressAction } from "../../redux/slices/userSlice";
 import { useState } from "react";
+import LoadingComponent from "../LoadingComponent/Loading";
 const Profile = () => {
   const dispatch=useDispatch();
   const {user}=useSelector((state)=>state.users.userAuth?.userInfo);
+  const {loading, error}  = useSelector((state) => state.users);
+
   console.log(user);
 
   const logoutCLick=()=>{
@@ -22,6 +25,7 @@ const Profile = () => {
   const [country, setCountry] = useState(user?.shippingAddress?.country)
   const [phoneNumber, setPhoneNumber] = useState(user?.shippingAddress?.phone)
   const [files,setfiles]=useState([]);
+
 
   const shippingNameChangeHalder = (e) =>{
     setShippingName(e.target.value)
@@ -48,10 +52,13 @@ const Profile = () => {
   }
 
   const fileHandleChange=(event)=>{
-    const newFiles=Array.from(event.target.files);
-    setfiles(newFiles);
-    console.log(files);
+   
+    setfiles(event.target.files);
+    console.log(event.target.files);
+    dispatch(uploadAvatarAction({file:event.target.files}));
   }
+
+  
 
 
   return (
@@ -62,7 +69,8 @@ const Profile = () => {
             <img className="left-profile-img-avatar" src={user?.avatar} alt="avavatar" />
           </div>
           <form className="button-upload-profile-div">
-          <input  name="images" onChange={fileHandleChange}  type="file"  multiple />
+          {
+            loading ? <LoadingComponent /> : <input  name="images" onChange={fileHandleChange}  type="file" />          }
           </form>
           <div className="input-fields-profile-div-left">
             <div className="input-div-profile-page">
