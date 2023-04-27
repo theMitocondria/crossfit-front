@@ -1,3 +1,3 @@
-const baseURL = 'https://ecommerc-eapi.onrender.com/api/v1';
+const baseURL = "https://crossfitbackend.onrender.com";
 
 export default baseURL;
