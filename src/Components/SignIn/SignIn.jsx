@@ -1,15 +1,18 @@
 import React from 'react'
 import './SignIn.css'
 import { Link,useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInAction } from '../../redux/slices/userSlice'
 import WhiteLoadingComponent from "../LoadingComponent/whiteLoading";
+import ErrorMsg from '../Alert/ErrorAlert'
 
 const SignIn = () => {
   
   const dispatch = useDispatch();
   let navigate = useNavigate();
+
+  
 
 
   const [email, setEmail] = useState("buddhgautam777@gmail.com")
@@ -24,12 +27,12 @@ const SignIn = () => {
   }
 
   // const userInfo = useSelector((state) => state.users?.userAuth?.userInfo)
-  const {loading, error} = useSelector((state) => state.users)
+ 
 
   const onSubmitHanlder = async(e) => {
     // e.preventDefault();
     console.log( email, password);
-   await dispatch(signInAction({ email, password}))
+   dispatch(signInAction({ email, password}))
 
   const userInfo = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;
 
@@ -40,11 +43,19 @@ const SignIn = () => {
       navigate(`/`)
     }
   }
+
+
+  const {loading, error} = useSelector((state) => state.users)
+  console.log(error);
   return (
     <div className='sign-in-page'>
         <img className='sign-in-page-img' src="https://res.cloudinary.com/dycitvrpg/image/upload/v1681382796/logo_xx6npu.png" alt="" />
 
         <div className='sign-in-main' >
+
+                  {
+                      error ? <ErrorMsg message={error.message} />:<></>
+                    }
             
             <div className='sign-in-main-left'>
                 <p className='sign-in-left-welcome'>Welcome!</p>
@@ -71,6 +82,7 @@ const SignIn = () => {
                     {
                       loading ? <WhiteLoadingComponent /> : <button onClick={onSubmitHanlder} className='sign-up-button'>Submit</button>
                     }
+                   
                    </div>
                 </div>
 

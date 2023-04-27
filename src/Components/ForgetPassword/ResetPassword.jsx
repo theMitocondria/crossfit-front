@@ -6,6 +6,7 @@ import { resetPasswordAction } from '../../redux/slices/userSlice';
 import WhiteLoadingComponent from "../LoadingComponent/whiteLoading";
 const ResetPassword = () => {
   const [resetPassword,setResetPassword]=useState();
+  const {loading , error} = useSelector(state => state.users)
   const dispatch=useDispatch();
   const params=useParams();
   const onChangePassword=(e)=>{
@@ -38,7 +39,9 @@ const OnSubmitPassword=()=>{
             <input className="sign-up-page-input-fields" required onChange={onChangePassword} type="text" />
 
             <div className="sign-up-page-submit-btn-div">
-              <button onClick={OnSubmitPassword} className="sign-up-button">Reset Password</button>
+             {
+              loading ? <WhiteLoadingComponent /> :  <button onClick={OnSubmitPassword} className="sign-up-button">Reset Password</button>
+             }
             </div>
           </div>
           <div  className='sign-in-page-link-div'>

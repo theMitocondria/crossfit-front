@@ -428,6 +428,12 @@ const userSlice = createSlice({
         });
 
 
+        builder.addCase(singleUserAction.rejected, (state, action) => {
+            state.findUser.loading=false;
+            state.findUser.error = action.payload;
+        });
+
+
     }
 })
 
