@@ -4,7 +4,7 @@ import "../DietPlan/dietplan.css"
 import GymplanNavbar from "./gymplanNavbar";
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingComponent from '../LoadingComponent/Loading';
+import WhiteLoadingComponent from '../LoadingComponent/whiteLoading';
 import { saveAs } from 'file-saver';
 import { gymPlanAction } from '../../redux/slices/gymPlanSlice';
 
@@ -143,7 +143,7 @@ const Gymplan = () => {
                
 
                 {
-                            loading ? (<LoadingComponent />) : ( <button className='form-button' onClick={onGymPlanSubmit}>Submit</button>)
+                            loading ? (<WhiteLoadingComponent />) : ( <button className='form-button' onClick={onGymPlanSubmit}>Submit</button>)
                            }
 
                            {

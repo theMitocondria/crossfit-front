@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { forgetPasswordAction } from '../../redux/slices/userSlice';
+import { load } from 'dotenv';
+import WhiteLoadingComponent from '../LoadingComponent/whiteLoading';
 
 const ForgetPassword = () => {
   const [email,setEmail]=useState();
   const dispatch=useDispatch();
+  const {loading , error} = useSelector((state) => state.users)
   const onChangeEmail=(e)=>{
     setEmail(e.target.value);
   }
@@ -34,7 +37,7 @@ const ForgetPassword = () => {
             <p className='sign-up-page-input-fields-desc'>Email Address</p>
             <input onChange={onChangeEmail} required className='sign-up-page-input-fields' type="email" />
             <div className='sign-up-page-submit-btn-div'>
-              <button className='sign-up-button' onClick={onSubmitForm}>Send Mail</button>
+            {loading ? <WhiteLoadingComponent /> :  <button className='sign-up-button' onClick={onSubmitForm}>Send Mail</button>}
             </div>
           </div>
         </div>

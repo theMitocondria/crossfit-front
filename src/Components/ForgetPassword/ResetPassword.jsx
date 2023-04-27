@@ -3,10 +3,12 @@ import { useState} from "react";
 import { Link, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { resetPasswordAction } from '../../redux/slices/userSlice';
+import WhiteLoadingComponent from "../LoadingComponent/whiteLoading";
 
 const ResetPassword = () => {
   const [resetPassword,setResetPassword]=useState();
   const dispatch=useDispatch();
+  const {loading, error} = useDispatch((state) => state.users)
   const params=useParams();
   const onChangePassword=(e)=>{
   setResetPassword(e.target.value);
@@ -38,7 +40,7 @@ const OnSubmitPassword=()=>{
             <input className="sign-up-page-input-fields" required onChange={onChangePassword} type="text" />
 
             <div className="sign-up-page-submit-btn-div">
-              <button onClick={OnSubmitPassword} className="sign-up-button">Reset Password</button>
+              {loading ? <WhiteLoadingComponent /> : <button onClick={OnSubmitPassword} className="sign-up-button">Reset Password</button>}
             </div>
           </div>
           <div  className='sign-in-page-link-div'>
