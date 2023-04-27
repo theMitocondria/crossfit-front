@@ -29,7 +29,6 @@ const Socialhome = () => {
         dispatch(AllPostsReducers({my}));
     },[]);
     const posts=useSelector(state=>state.social?.posts);
-    console.log(posts);
 
     return (
         <div>
