@@ -6,12 +6,12 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { AllPostsReducers } from '../../redux/slices/socialSlice';
+import { AllPostsReducers, MyPostsReducers } from '../../redux/slices/socialSlice';
 
 const Socialhome = () => {
-
     const dispatch=useDispatch();
     const navigate = useNavigate();
+    const [showmypost, setshowmypost] = useState(false);
     const [clicked, setClicked] = useState(false);
     const phone = window.innerWidth < 600 ? true : false;
     const buttonClicked = () => {
@@ -22,14 +22,26 @@ const Socialhome = () => {
         navigate('/newpost')
     }
     const allpostclickbtn = () => {
+        setshowmypost(false)
         navigate('/community')
     }
+
+    const mypostclickbtn = () => {
+        setshowmypost(true)
+        const my ="hi"
+        dispatch(MyPostsReducers({my}))
+    }
+
+    const {loading, error} = useSelector(state => state.social)
+    console.log(loading)
+    const posts=useSelector(state=>state.social?.posts?.posttoshow);
+    const myposts= useSelector(state => state.social?.myPosts?.postToShow)
+    console.log(posts);
     useEffect(()=>{
         const my="post function called";
         dispatch(AllPostsReducers({my}));
-    },[]);
-    const posts=useSelector(state=>state.social?.posts);
-    console.log(posts);
+    },[dispatch]);
+  
 
     return (
         <div>
@@ -49,7 +61,7 @@ const Socialhome = () => {
                             <h4 className='socialhome-left-desc'>Artist,Trainer,Web Developer</h4>
                             <h1 className='socialhome-left-no-post'>4 Posts</h1>
                             <div className='socialhome-left-BUTTON-div'>
-                                <button onClick={allpostclickbtn} className='socialhome-left-BUTTON'>MY POSTS</button>
+                                <button onClick={mypostclickbtn} className='socialhome-left-BUTTON'>MY POSTS</button>
                                 <button onClick={allpostclickbtn} className='socialhome-left-BUTTON'>ALL POSTS</button>
                                 <button onClick={newpostbuttonClicked} className='socialhome-left-BUTTON'>NEW POST</button>
                                 <button className='socialhome-left-BUTTON'>EDIT PROFILE</button>
@@ -58,10 +70,14 @@ const Socialhome = () => {
                         </div>
                     </div>
                     <div>
-                        <CardPost />
-                        <CardPost />
-                        <CardPost />
-                        <CardPost />
+                    {  loading ? <h1> please wait</h1> : (showmypost ?  myposts?.map((item) => (
+                        // console.log("gautam",item.user.name, item.captionHeading, item.user.avatar, item.imageUrl);
+                        <CardPost name={item.user.name}  captionheading={item.captionHeading} captiondesc ={item.captionDescription} postImageUrl={item.imageUrl} userAvatarUrl={item.user.avatar} />
+                      )) :  posts?.map((item) => (
+                        // console.log("gautam",item.user.name, item.captionHeading, item.user.avatar, item.imageUrl);
+                        <CardPost name={item.user.name}  captionheading={item.captionHeading} captiondesc ={item.captionDescription} postImageUrl={item.imageUrl} userAvatarUrl={item.user.avatar} />
+                      )) )
+                    }
                     </div>
                 </div> : <div className='socialhome-main-div'>
                     <div className='socialhome-left-div'>
@@ -74,7 +90,7 @@ const Socialhome = () => {
                             <h4 className='socialhome-left-desc'>Artist,Trainer,Web Developer</h4>
                             <h1 className='socialhome-left-no-post'>4 Posts</h1>
                             <div className='socialhome-left-BUTTON-div'>
-                                <button onClick={allpostclickbtn} className='socialhome-left-BUTTON'>MY POSTS</button>
+                                <button onClick={mypostclickbtn} className='socialhome-left-BUTTON'>MY POSTS</button>
                                 <button onClick={allpostclickbtn} className='socialhome-left-BUTTON'>ALL POSTS</button>
                                 <button onClick={newpostbuttonClicked} className='socialhome-left-BUTTON'>NEW POST</button>
                                 <button className='socialhome-left-BUTTON'>EDIT PROFILE</button>
@@ -83,11 +99,14 @@ const Socialhome = () => {
                         </div>
                     </div>
                     <div className='socialhome-center-div'>
-                        <CardPost />
-                        <CardPost />
-                        <CardPost />
-                        <CardPost />
-                        <CardPost />
+                    {  loading ? <h1> please wait</h1> : (showmypost ?  myposts?.map((item) => (
+                        // console.log("gautam",item.user.name, item.captionHeading, item.user.avatar, item.imageUrl);
+                        <CardPost name={item.user.name}  captionheading={item.captionHeading} captiondesc ={item.captionDescription} postImageUrl={item.imageUrl} userAvatarUrl={item.user.avatar} />
+                      )) :  posts?.map((item) => (
+                        // console.log("gautam",item.user.name, item.captionHeading, item.user.avatar, item.imageUrl);
+                        <CardPost name={item.user.name}  captionheading={item.captionHeading} captiondesc ={item.captionDescription} postImageUrl={item.imageUrl} userAvatarUrl={item.user.avatar} />
+                      )) )
+                    }
                     </div>
                     <div className='socialhome-right-div'>
                         <h2 className='socialhome-right-heading-para'>Users</h2>
