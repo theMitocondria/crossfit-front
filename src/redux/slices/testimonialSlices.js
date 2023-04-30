@@ -1,10 +1,12 @@
 import { createAsyncThunk , createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 import baseURL from "../../utils/baseURL";
+import { resetErrAction, resetSuccessAction } from "../globalActions/globalAction";
 
 const initialState={
     loading:false,
     error:null,
+    success:null,
     testimonial:{},
     testimonials:[],
 }
@@ -71,6 +73,7 @@ const TestimonialSLice=createSlice({
         })
         builder.addCase(allTestimonialsAction.fulfilled,(state,action)=>{
             state.loading=false;
+            state.success=action.payload;
             state.testimonials=action.payload;
         })
         builder.addCase(allTestimonialsAction.rejected,(state,action)=>{
@@ -84,11 +87,20 @@ const TestimonialSLice=createSlice({
         });
         builder.addCase(createTestimonialsReview.fulfilled, (state,action) => {
             state.loading = false;
+            state.success=action.payload;
             state.testimonial=action.payload;
         });
         builder.addCase(createTestimonialsReview.rejected, (state, action) => {
             state.error = action.payload;
         });
+
+        builder.addCase(resetErrAction.pending, (state, action) => {
+            state.error = action.payload;
+        });
+        builder.addCase(resetSuccessAction.pending, (state, action) => {
+            state.success = false;
+        });
+
     }
 })
 

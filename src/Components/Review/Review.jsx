@@ -3,35 +3,41 @@ import "./Review.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { createTestimonialsReview } from '../../redux/slices/testimonialSlices';
 import LoadingComponent from '../LoadingComponent/Loading';
-
+import SuccessMsg from '../Alert/SuccessAlert';
+import ErrorMsg from '../Alert/ErrorAlert';
 const Review = () => {
-    const [heading,setHeading]=useState();
-    const [Description,setDescription]=useState();
-    const dispatch=useDispatch();
-    const {loading,error}=useSelector((state)=>state.testimonial);
+    const [heading, setHeading] = useState();
+    const [Description, setDescription] = useState();
+    const dispatch = useDispatch();
+    const { loading, error, success } = useSelector((state) => state.testimonial);
 
-    
-    const onChangeHeading=(e)=>{
-         setHeading(e.target.value);
-         console.log(heading);
+    const onChangeHeading = (e) => {
+        setHeading(e.target.value);
+        console.log(heading);
     }
 
-    const onChangeDescription=(e)=>{
+    const onChangeDescription = (e) => {
         setDescription(e.target.value);
         console.log(Description);
     }
 
-    const onSubmitTestimmonials=(e)=>{
+    const onSubmitTestimmonials = (e) => {
         e.preventDefault();
         console.log("testimonials is working");
-        console.log(heading,Description);
-        dispatch(createTestimonialsReview({heading,Description}));
+        console.log(heading, Description);
+        dispatch(createTestimonialsReview({ heading, Description }));
         setHeading("");
         setDescription("");
     }
     return (
 
         <div className='Review-main'>
+            {
+                error ? <ErrorMsg message={error.message} /> : <></>
+
+            }{
+                success ? <SuccessMsg message={success.message} /> : <></>
+            }
             <div className='Review-main-box'>
                 <div className='Review-left'>
                     <div className='Review-main-heading'>
@@ -39,19 +45,19 @@ const Review = () => {
                     </div>
                     <div className='Review-main-form'>
                         <form>
-                            <input className="Review-main-form-imput-tags" type='text' value={heading} placeholder='Heading' onChange={onChangeHeading}/>
-                            <hr/>
-                            <textarea className='Review-main-form-imput-textarea' type='text' value={Description} placeholder='Write your review in about 50 words' onChange={onChangeDescription}/>
+                            <input className="Review-main-form-imput-tags" type='text' value={heading} placeholder='Heading' onChange={onChangeHeading} />
+                            <hr />
+                            <textarea className='Review-main-form-imput-textarea' type='text' value={Description} placeholder='Write your review in about 50 words' onChange={onChangeDescription} />
                             <div className='Review-main-form-imput-button-div'>
-                            {
-                                loading?<LoadingComponent/>:<button className="Review-main-form-imput-button" onClick={onSubmitTestimmonials}>Submit</button>
-                            }
+                                {
+                                    loading ? <LoadingComponent /> : <button className="Review-main-form-imput-button" onClick={onSubmitTestimmonials}>Submit</button>
+                                }
                             </div>
                         </form>
                     </div>
                 </div>
                 <div className='Review-right'>
-                   <img className="Review-main-form-image"src='https://res.cloudinary.com/dycitvrpg/image/upload/v1681535035/helpupimprove_efsbkr.png' alt="imag"/>
+                    <img className="Review-main-form-image" src='https://res.cloudinary.com/dycitvrpg/image/upload/v1681535035/helpupimprove_efsbkr.png' alt="imag" />
                 </div>
             </div>
         </div>

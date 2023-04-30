@@ -7,21 +7,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import WhiteLoadingComponent from "../LoadingComponent/whiteLoading";
 import { saveAs } from 'file-saver';
 import { gymPlanAction } from '../../redux/slices/gymPlanSlice';
+import ErrorMsg from '../Alert/ErrorAlert';
 
 const Gymplan = () => {
     const [age, setage] = useState();
     const [height, setHeight] = useState();
     const [weight, setWeight] = useState();
-    const [gender, setgender] = useState();
-    const [goal, setgoal] = useState();
-    const [TainingSplit, setTrainingSplit] = useState();
-    const [duration, setDuration] = useState();
-    const [workout, setWorkout] = useState();
+    const [gender, setgender] = useState("Male");
+    const [goal, setgoal] = useState("Loose Weight");
+    const [TainingSplit, setTrainingSplit] = useState("Push-Pull-leg");
+    const [duration, setDuration] = useState("45 min");
+    const [workout, setWorkout] = useState("Gym Workout");
+    const [Days, setDays] = useState("5");
 
 
     const dispatch = useDispatch();
-    const {loading, error, gymPlanImage} = useSelector((state) => state.gymPlan)
-   
+    const {loading, gymPlanImage} = useSelector((state) => state.gymPlan)
+    const {error} = useSelector((state) => state.users);
    
 
     const ageChangeHandler=(e)=>{
@@ -59,9 +61,12 @@ const Gymplan = () => {
         setWorkout(e.target.value);
     }
 
+    const DaysChangeHandler=(e)=>{
+        setDays(e.target.value);
+    }
     const onGymPlanSubmit=()=>{
         const message = `Make a Gym Plan for a ${gender} aged ${age} years old. Having weight ${weight}Kgs and height ${height}cms. Want to ${goal} with a training split
-                            of ${TainingSplit} with a duration of ${duration} at ${workout}.`
+                            of ${TainingSplit} with a duration of ${duration} for ${Days} a week at ${workout}.`
         console.log(message);
 
         dispatch(gymPlanAction({message}));
@@ -74,8 +79,7 @@ const Gymplan = () => {
 
     return (
         <div>
-            <GymplanNavbar />
-            <div className='gymplan-main'>
+           <div className='gymplan-main'>
 
                 <div className='upper-gymplan'>
                     <div className='gymplan-main-heading'>
@@ -98,10 +102,10 @@ const Gymplan = () => {
                             <input type="number" onChange={ageChangeHandler}  value={age} placeholder='Age' className='input-fields-dietplan-item' />
                         </div>
                         <div className='input-fields-dietplan'>
-                            <input type="number" onChange={heightChangeHandler} value={height}className='input-fields-dietplan-item' placeholder='Height' />
+                            <input type="number" onChange={heightChangeHandler} value={height}className='input-fields-dietplan-item' placeholder='Height in cm' />
                         </div>
                         <div className='input-fields-dietplan'>
-                            <input type="number" onChange={weightChangeHandler} value={weight}  placeholder='Weight' className='input-fields-dietplan-item' />
+                            <input type="number" onChange={weightChangeHandler} value={weight}  placeholder='Weight in kg' className='input-fields-dietplan-item' />
                         </div>
                     </div>
                     <div className='gymplan-lower-right'>
@@ -120,6 +124,18 @@ const Gymplan = () => {
                                 <option value="Push-Pull-leg">Push-Pull-leg</option>
                                 <option value="Lower-Upper-split">Lower-Upper-split</option>
                                 <option value="Body-part-split">Body-part-split</option>
+                            </select>
+                        </div>
+                        <div className='input-fields-dietplan'>
+                            <select name="Workout" onChange={workoutChangeHandler} value={workout} className='input-fields-dietplan-item'>
+                                <option value="6"> No of days in a Week</option>
+                                <option value="1"> 1</option>
+                                <option value="2"> 2</option>
+                                <option value="3"> 3</option>
+                                <option value="4"> 4</option>
+                                <option value="5"> 5</option>
+                                <option value="6"> 6</option>
+
                             </select>
                         </div>
                         <div className='input-fields-dietplan'>

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DietPlanAction } from '../../redux/slices/dietPlanSlice';
 import LoadingComponent from '../LoadingComponent/Loading';
 import { saveAs } from 'file-saver';
+import ErrorMsg from '../Alert/ErrorAlert';
 
 
 
@@ -16,11 +17,11 @@ const DietPlan = () => {
     const [age, setage] = useState();
     const [height, setHeight] = useState();
     const [weight, setWeight] = useState();
-    const [gender, setgender] = useState();
+    const [gender, setgender] = useState("Male");
     const dispatch=useDispatch();
 
-    const {loading, error, DietPlanImage} = useSelector((state) => state.dietPlan)
-   
+    const {loading,  DietPlanImage} = useSelector((state) => state.dietPlan)
+    const { error} = useSelector((state) => state.users)
    
     
     const ageChangeHandler=(e)=>{
@@ -64,10 +65,13 @@ const DietPlan = () => {
     const buttonData = data;
     return (
         <div className='Dietplan'>
-            <div className='DietPlan-top'>
+            {
+                error?<ErrorMsg message={error?.message}/>:<div className='DietPlan-top'>
                 <h2 className='Dietplan-heading'>Diet Plan</h2>
                 <p className='Dietplan-Description'>Our app is designed to make diet planning easy and personalized. With our innovative approach, users can create their own customized diet charts based on the items they choose. Simply select the foods you enjoy and want to incorporate into your diet, and our app generates a tailored meal plan that meets your specific nutritional requirements and goals. So why still waiting? Try it Out!!</p>
             </div>
+            
+            }
             {/* <div className='dietplan-main'> */}
                 <div className='Dietplan-main-div'>
 
@@ -84,10 +88,10 @@ const DietPlan = () => {
                                     <input type="number" onChange={ageChangeHandler} placeholder='Age' className='input-fields-dietplan-item' />
                                 </div>
                                 <div className='input-fields-dietplan'>
-                                    <input type="number" onChange={heightChangeHandler} className='input-fields-dietplan-item' placeholder='Height' />
+                                    <input type="number" onChange={heightChangeHandler} className='input-fields-dietplan-item' placeholder='Height in cms' />
                                 </div>
                                 <div className='input-fields-dietplan'>
-                                    <input type="number" onChange={weightChangeHandler} placeholder='Weight' className='input-fields-dietplan-item' />
+                                    <input type="number" onChange={weightChangeHandler} placeholder='Weight in kgs' className='input-fields-dietplan-item' />
                                 </div>
 
                             </div>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import baseURL from "../../utils/baseURL";
 import { createAsyncThunk, createSlice, isAsyncThunkAction } from "@reduxjs/toolkit";
+import { resetErrAction, resetSuccessAction } from "../globalActions/globalAction";
 
 
 
@@ -8,6 +9,7 @@ const initialState = {
     loading: false,
     error: null,
     message: null,
+    success:null,
 
 }
 
@@ -58,12 +60,21 @@ const  feedbackSlice = createSlice({
         });
         builder.addCase(feedbackAction.fulfilled, (state, action) => {
             state.loading = false;
+            state.success= action.payload;
             state.message = action.payload;
         });
         builder.addCase(feedbackAction.rejected, (state, action) => {
             state.error = action.payload;
             state.loading = false;
         });
+
+        builder.addCase(resetErrAction.pending, (state, action) => {
+            state.error = action.payload;
+        });
+        builder.addCase(resetSuccessAction.pending, (state, action) => {
+            state.success = false;
+        });
+
     }
 });
 

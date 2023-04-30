@@ -81,7 +81,7 @@ const onSubmitHanlder = async(e) => {
                         <input  onChange={emailChangeHandler} required className='sign-up-page-input-fields' type="text" />
                     
                         <p className='sign-up-page-input-fields-desc'>Password</p>
-                        <input  onChange={passwordChangeHandler} required minLength={6} className='sign-up-page-input-fields' type="text" />
+                        <input  onChange={passwordChangeHandler} required minLength={6} className='sign-up-page-input-fields' type="password" />
                    
 
                    <div className='sign-up-page-submit-btn-div'>

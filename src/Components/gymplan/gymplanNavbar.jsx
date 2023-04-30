@@ -3,8 +3,10 @@ import './gymplan.css'
 import { HashLink } from 'react-router-hash-link'
 import { Link} from 'react-router-dom'
 import './gymplanNavbar.css'
+import { useSelector } from 'react-redux'
 
 const GymplanNavbar = () => {
+  const {user}=useSelector((state)=>state.users.userAuth?.userInfo);
   return (
     <div className='gymplan-navbar'>
       
@@ -18,7 +20,7 @@ const GymplanNavbar = () => {
         {/* </BrowserRouter> */}
        
       </div>
-      <Link to='/profile'><img className='user-logo' src="https://res.cloudinary.com/dycitvrpg/image/upload/v1681625760/user_ynk5rx.png" alt="" /></Link>
+      <Link to='/profile'><img className='user-logo' src={user?.avatar} alt="" /></Link>
     </div>
   )
 }

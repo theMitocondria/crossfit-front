@@ -204,6 +204,7 @@ function App() {
 
         <Route path="/gymplan" element={
          isLoggedIn ? <>
+         <GymplanNavbar/>
             <Gymplan />
             <Footer />
           </> : <BeforeLoginLandingPage />
