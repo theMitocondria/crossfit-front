@@ -6,7 +6,7 @@ import { resetErrAction, resetSuccessAction } from "../globalActions/globalActio
 const initialState={
     loading:false,
     error:null,
-    success:null,
+    success:false,
     testimonial:{},
     testimonials:[],
 }
@@ -73,7 +73,6 @@ const TestimonialSLice=createSlice({
         })
         builder.addCase(allTestimonialsAction.fulfilled,(state,action)=>{
             state.loading=false;
-            state.success=action.payload;
             state.testimonials=action.payload;
         })
         builder.addCase(allTestimonialsAction.rejected,(state,action)=>{
@@ -92,6 +91,7 @@ const TestimonialSLice=createSlice({
         });
         builder.addCase(createTestimonialsReview.rejected, (state, action) => {
             state.error = action.payload;
+            state.success=false;
         });
 
         builder.addCase(resetErrAction.pending, (state, action) => {
