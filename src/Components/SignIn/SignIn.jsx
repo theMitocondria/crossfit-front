@@ -15,8 +15,8 @@ const SignIn = () => {
   
 
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("dhruvmehta382@gmail.com")
+  const [password, setPassword] = useState("Dhruv*@12")
 
   const emailChangeHandler = (e) => {
     setEmail(e.target.value)
@@ -70,12 +70,12 @@ const SignIn = () => {
                       
 
                         <p className='sign-up-page-input-fields-desc'>Email</p>
-                        <input onChange={emailChangeHandler} required className='sign-up-page-input-fields' type="email" />
+                        <input value={email} onChange={emailChangeHandler} required className='sign-up-page-input-fields' type="email" />
                   
 
                     
                         <p className='sign-up-page-input-fields-desc'>Password</p>
-                        <input onChange={passwordChangeHandler} required className='sign-up-page-input-fields' type="password" />
+                        <input value ={password} onChange={passwordChangeHandler} required className='sign-up-page-input-fields' type="password" />
                    
 
                    <div className='sign-up-page-submit-btn-div'>
