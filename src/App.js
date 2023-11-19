@@ -59,7 +59,7 @@ function App() {
               <WhyCrossFit />
               <Swiper data={data} />
               <Wearecrossfit />
-              <GetInTouch />
+          //<GetInTouch />
               <Footer />
             </>
           }
