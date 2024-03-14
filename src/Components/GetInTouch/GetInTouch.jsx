@@ -9,7 +9,7 @@ const GetInTouch = () => {
     <div className='get-in-touch-class'>
       <div className='get-in-touch-upper'>
         <p className='getintouchpara'>Get in <span>touch</span></p>
-        <Link to="https://portfolio-xi-eight-61.vercel.app/">
+        <Link to="https://mitocondria-gules.vercel.app/">
           <button className='get-in-touch-aboutme-btn'>About me</button>
         </Link>
       </div>
